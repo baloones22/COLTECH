@@ -41,20 +41,42 @@ class ShopKeeperController {
   }
 
   async index(req, res) {
-    const { username = '', page = 1 } = req.query;
+    const { page, filter } = req.query;
 
-    const shopkeeper = await shopKeeper.findAndCountAll({
-      where: {
-        name: {
-          [Op.like]: `%${username}`,
+    if(filter || page) {
+      if(!page) {
+        const shopkeeper = await shopKeeper.findAll({
+          where: {
+            employee: {
+              [Op.iLike] : `%${filter}%`,
+            },
+          },
+        });
+
+        return res.json(shopkeeper);
+      }
+
+      const { count, rows: shopkeeper } = await shopKeeper.findAndCountAll({
+        where: {
+          employee: {
+            [Op.iLike]: `%${filter}%`,
+          },
         },
-      },
-      limit: 10,
-      offset: (page - 1) * 10,
+
+        order: ['employee'],
+        limit: 10,
+        offset: (page- 1) * 10,
+      });
+
+      return res.json({ shopkeeper, count });
+    }
+
+    const shopkeeper = await shopKeeper.findAll({
       order: ['employee'],
     });
 
     return res.json(shopkeeper);
+
   }
 
   async show(req, res) {
