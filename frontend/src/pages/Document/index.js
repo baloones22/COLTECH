@@ -11,8 +11,8 @@ import { formatPrice } from '~/helpers/format';
 
 import { Container, PlanList } from './styles';
 
-export default function Plans() {
-  const [plans, setPlans] = useState([]);
+export default function Document() {
+  const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const textAlignStyle = {
@@ -21,9 +21,9 @@ export default function Plans() {
 
   useEffect(() => {
     const loadPlans = async () => {
-      const response = await api.get('plans');
+      const response = await api.get('documents');
 
-      setPlans(response.data);
+      setDocuments(response.data);
       setLoading(false);
     };
 
@@ -31,21 +31,21 @@ export default function Plans() {
   }, []);
 
   const handleEdit = id => {
-    history.push(`/plans/${id}`);
+    history.push(`/documents/${id}`);
   };
 
-  const handleDelete = plan => {
+  const handleDelete = document => {
     confirmAlert({
       title: 'Confirme a exclusão',
-      message: `Deseja remover o plano ${plan.title} ?`,
+      message: `Deseja remover o laudo ${document.title} ?`,
       buttons: [
         {
           label: 'Yes',
           onClick: async () => {
             try {
-              await api.delete(`plans/${plan.id}`);
-              toast.success('Plano excluido com sucesso');
-              setPlans(plans.filter(s => s.id !== plan.id));
+              await api.delete(`documents/${document.id}`);
+              toast.success('Laudo excluido com sucesso');
+              setDocuments(documents.filter(s => s.id !== document.id));
             } catch (err) {
               toast.error(
                 (err.response && err.response.data.error) ||
@@ -69,16 +69,16 @@ export default function Plans() {
       ) : (
         <>
           <div>
-            <h1>Gerenciando tipos de documentos</h1>
+            <h1>Gerenciando tipos de Laudos</h1>
             <div>
-              <button type="button" onClick={() => history.push('/plans/new')}>
+              <button type="button" onClick={() => history.push('/documents/new')}>
                 <MdAdd size={18} />
-                <span>CADASTRAR</span>
+                <span>Laudos Loja </span>
               </button>
             </div>
           </div>
-          {!plans.length ? (
-            <p>Nenhum plano encontrado...</p>
+          {!document.length ? (
+            <p>Nenhum laudo encontrado...</p>
           ) : (
             <PlanList>
               <li>
@@ -86,18 +86,18 @@ export default function Plans() {
                 <strong style={textAlignStyle}>DURAÇÃO</strong>
                 <strong style={textAlignStyle}>VALOR p/ MÊS</strong>
               </li>
-              {plans.map(plan => (
-                <li key={plan.id}>
-                  <span>{plan.title}</span>
-                  <span style={textAlignStyle}>{`${plan.duration} ${
-                    plan.duration === 1 ? 'mês' : 'meses'
+              {document.map(document => (
+                <li key={document.id}>
+                  <span>{document.title}</span>
+                  <span style={textAlignStyle}>{`${document.duration} ${
+                    document.duration === 1 ? 'mês' : 'meses'
                   }`}</span>
-                  <span style={textAlignStyle}>{formatPrice(plan.price)}</span>
+                  <span style={textAlignStyle}>1220,00</span>
                   <div>
-                    <button type="button" onClick={() => handleEdit(plan.id)}>
+                    <button type="button" onClick={() => handleEdit(document.id)}>
                       editar
                     </button>
-                    <button type="button" onClick={() => handleDelete(plan)}>
+                    <button type="button" onClick={() => handleDelete(document)}>
                       apagar
                     </button>
                   </div>

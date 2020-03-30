@@ -17,12 +17,9 @@ const schema = Yup.object().shape({
     .required('Campo duração é obrigatório')
     .integer()
     .positive('Duração precisa ser positivo'),
-  price: Yup.number()
-    .required('Campo preço é obrigatório')
-    .positive('Preço precisa ser positivo'),
 });
 
-export default function StorePlans() {
+export default function StoreDocument() {
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState(0);
   const [price, setPrice] = useState(0);
@@ -33,7 +30,7 @@ export default function StorePlans() {
     if (id) {
       setLoading(true);
       const getPlan = async () => {
-        const { data } = await api.get(`/plans/${id}`);
+        const { data } = await api.get(`/documents/${id}`);
 
         setTitle(data.title);
         setDuration(data.duration);
@@ -74,23 +71,23 @@ export default function StorePlans() {
 
     try {
       if (id) {
-        await api.put(`plans/${id}`, {
+        await api.put(`documents/${id}`, {
           title,
           duration,
           price: unFormat(price),
         });
 
         toast.success('Plano atualizado com sucesso');
-        history.push('/plans');
+        history.push('/documents');
       } else {
-        const { data } = await api.post('plans', {
+        const { data } = await api.post('documents', {
           title,
           duration,
           price: unFormat(price),
         });
 
-        toast.success('Plano cadastrado com sucesso');
-        history.push(`/plans/${data.id}`);
+        toast.success('Documento cadastrado com sucesso');
+        history.push(`/documents/${data.id}`);
       }
     } catch (err) {
       toast.error(
@@ -109,9 +106,9 @@ export default function StorePlans() {
       ) : (
         <>
           <Header>
-            <h1>{id ? 'Edição de plano' : 'Cadastro de plano'}</h1>
+            <h1>{id ? 'Edição de documento' : 'Cadastro de documento'}</h1>
             <div>
-              <button type="button" onClick={() => history.push('/plans')}>
+              <button type="button" onClick={() => history.push('/documents')}>
                 <MdKeyboardArrowLeft size={20} color="#fff" />
                 <span>VOLTAR</span>
               </button>
@@ -123,7 +120,7 @@ export default function StorePlans() {
           </Header>
           <form id="form-plans" onSubmit={handleSubmit}>
             <div>
-              <label>TÍTULO DO PLANO</label>
+              <label>TÍTULO DO LAUDO</label>
               <input
                 id="title"
                 name="title"
