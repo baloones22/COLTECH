@@ -11,8 +11,8 @@ import api from '~/services/api';
 
 import { Container, StudentList } from './styles';
 
-export default function Students() {
-  const [students, setStudents] = useState([]);
+export default function Shopkeeper() {
+  const [shopkeeper, setShopkeepers] = useState([]);
   const [filter, setFilter] = useState('');
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -22,14 +22,14 @@ export default function Students() {
     textAlign: 'center',
   };
 
-  const loadStudents = async () => {
+  const loadShopkeeper = async () => {
     try {
-      const { data } = await api.get('students', {
+      const { data } = await api.get('/shopkeeper', {
         params: { page, filter },
       });
 
       setTotalPages(Math.ceil(data.count / 10));
-      setStudents(data.students);
+      setShopkeepers(data.shopkeeper);
     } catch (err) {
       toast.error(
         (err.response && err.response.data.error) ||
@@ -42,26 +42,26 @@ export default function Students() {
 
   useEffect(() => {
     setLoading(true);
-    loadStudents();
+    loadShopkeeper();
   }, [page]); //eslint-disable-line
 
   const handleEdit = id => {
-    history.push(`students/${id}`);
+    history.push(`/shopkeeper/${id}`);
   };
 
-  const handleDelete = student => {
+  const handleDelete = shopkeeper => {
     confirmAlert({
       title: 'Confirme a exclusão',
-      message: `Deseja remover o aluno ${student.name} ?`,
+      message: `Deseja remover o lojista ${shopkeeper.employee} ?`,
       buttons: [
         {
           label: 'Yes',
           onClick: async () => {
             try {
-              await api.delete(`students/${student.id}`);
-              toast.success('Aluno excluido com sucesso');
-              setPage(students.length === 1 ? page - 1 : page);
-              setStudents(students.filter(s => s.id !== student.id));
+              await api.delete(`shopkeeper/${shopkeeper.id}`);
+              toast.success('Lojista excluido com sucesso');
+              setPage(shopkeeper.length === 1 ? page - 1 : page);
+              setShopkeepers(shopkeeper.filter(s => s.id !== shopkeeper.id));
             } catch (err) {
               toast.error(
                 (err.response && err.response.data.error) ||
@@ -79,7 +79,7 @@ export default function Students() {
   };
 
   const handleSearch = () => {
-    if (page === 1) return loadStudents();
+    if (page === 1) return loadShopkeeper();
 
     return setPage(1);
   };
@@ -98,49 +98,49 @@ export default function Students() {
       ) : (
         <>
           <div>
-            <h1>Gerenciando lojistas</h1>
+            <h1>Gerenciamento de lojistas</h1>
             <div>
               <button
                 type="button"
-                onClick={() => history.push('students/new')}
+                onClick={() => history.push('/shopkeeper/new')}
               >
                 <MdPersonAdd size={18} />
                 <span>CADASTRAR</span>
               </button>
               <input
                 type="text"
-                placeholder="Buscar aluno"
+                placeholder="Buscar Lojista"
                 value={filter}
                 onChange={({ target }) => setFilter(target.value)}
                 onKeyPress={e => (e.key === 'Enter' ? handleSearch() : '')}
               />
             </div>
           </div>
-          {!students.length ? (
-            <p>Nenhum aluno encontrado...</p>
+          {!shopkeeper.length ? (
+            <p>Nenhum lojista encontrado...</p>
           ) : (
             <>
               <StudentList>
                 <li>
-                  <strong>NOME</strong>
+                  <strong>Funcionário</strong>
                   <strong>E-MAIL</strong>
-                  <strong style={textAlignStyle}>IDADE</strong>
+                  <strong style={textAlignStyle}>EMPRESA</strong>
                 </li>
-                {students.map(student => (
-                  <li key={student.id}>
-                    <span>{student.name}</span>
-                    <span>{student.email}</span>
-                    <span style={textAlignStyle}>{student.age}</span>
+                {shopkeeper.map(shopkeeper => (
+                  <li key={shopkeeper.id}>
+                    <span>{shopkeeper.employee}</span>{/* employe */}
+                    <span>{shopkeeper.email}</span>{/* ok */}
+                    <span style={textAlignStyle}>{shopkeeper.company}</span>{/* company */}
                     <div>
                       <button
                         type="button"
-                        onClick={() => handleEdit(student.id)}
+                        onClick={() => handleEdit(shopkeeper.id)}
                       >
                         editar
                       </button>
                       <button
                         type="button"
-                        onClick={() => handleDelete(student)}
+                        onClick={() => handleDelete(shopkeeper)}
                       >
                         apagar
                       </button>

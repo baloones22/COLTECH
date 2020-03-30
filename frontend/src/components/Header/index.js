@@ -36,10 +36,10 @@ export default function Header() {
         ) : (
           <nav>
             <span>DOC LOJISTAS</span>
-            <LinkWrapper to="/students">LOJAS</LinkWrapper>
-            <LinkWrapper to="/plans">LAUDOS</LinkWrapper>
-            <LinkWrapper to="/memberships">VINCULÇÃO</LinkWrapper>
-            <LinkWrapper to="/helporders">PEDIDOS DE AUXÍLIO</LinkWrapper>
+            <LinkWrapper to="/students">Lojas</LinkWrapper>
+            <LinkWrapper to="/plans">Tipos de documentos</LinkWrapper>
+            <LinkWrapper to="/memberships">Laudos</LinkWrapper>
+            <LinkWrapper to="/helporders">Next new feature</LinkWrapper>
           </nav>
         )}
 

@@ -13,47 +13,42 @@ import HeightInput from '~/components/HeightInput';
 import { Container, Header } from './styles';
 
 const schema = Yup.object().shape({
-  name: Yup.string().required('Campo Nome é obrigatório'),
+  employee: Yup.string().required('Campo Nome do funcionário é obrigatório'),
+  company: Yup.string().required('Campo de campany  é obrigatório'),
   email: Yup.string()
     .email('Digite um email valido')
     .required('Campo E-mail é obrigatório'),
-  age: Yup.number().required('Campo idade é obrigatório'),
-  weight: Yup.number()
+  phone: Yup.number()
     .required('Campo peso é obrigatório')
-    .positive('Campo peso precisa ser positivo')
-    .max(250, 'Peso máximo 250 kilos'),
-  height: Yup.number()
-    .required('Campo Altura é obrigatório')
-    .positive('Campo Altura precisa ser positivo')
-    .max(2.5, 'Altura máxima 2.5 metros'),
+    .positive('Campo contato precisa ser positivo')
 });
 
-export default function ManageStudent() {
-  const [student, setStudent] = useState({});
+export default function ManageShopkeepers() {
+  const [shopkeeper, setShopkeepers] = useState({});
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
     if (id) {
       setLoading(true);
-      const getStudent = async () => {
-        const response = await api.get(`/students/${id}`);
+      const getShopkeeper = async () => {
+        const response = await api.get(`/shopkeeper/${id}`);
 
-        setStudent(response.data);
+        setShopkeepers(response.data);
         setLoading(false);
       };
 
-      getStudent();
+      getShopkeeper();
     }
   }, [id]);
 
   const handleStore = async data => {
     setLoading(true);
     try {
-      const res = await api.post('students', { ...data });
+      const res = await api.post('shopkeeper', { ...data });
 
-      toast.success('Aluno cadastrado com sucesso');
-      history.push(`/students/${res.data.id}`);
+      toast.success('Lojista cadastrado com sucesso');
+      history.push(`/shopkeeper/${res.data.id}`);
     } catch (err) {
       toast.error(
         (err.response && err.response.data.error) ||
@@ -67,10 +62,10 @@ export default function ManageStudent() {
   const handleUpdate = async data => {
     setLoading(true);
     try {
-      await api.put(`students/${id}`, { ...data });
+      await api.put(`shopkeeper/${id}`, { ...data });
 
-      toast.success('Aluno atualizado com sucesso');
-      history.push(`/students`);
+      toast.success('Lojista atualizado com sucesso');
+      history.push(`/shopkeeper`);
     } catch (err) {
       toast.error(
         (err.response && err.response.data.error) ||
@@ -88,9 +83,9 @@ export default function ManageStudent() {
       ) : (
         <>
           <Header>
-            <h1>{id ? 'Edição de aluno' : 'Cadastro de aluno'}</h1>
+            <h1>{id ? 'Edição de lojista' : 'Cadastro de lojista'}</h1>
             <div>
-              <button type="button" onClick={() => history.push('/students')}>
+              <button type="button" onClick={() => history.push('/shopkeeper')}>
                 <MdKeyboardArrowLeft size={20} color="#fff" />
                 <span>VOLTAR</span>
               </button>
@@ -103,12 +98,13 @@ export default function ManageStudent() {
           <Form
             schema={schema}
             onSubmit={id ? handleUpdate : handleStore}
-            initialData={student}
+            initialData={shopkeeper}
             id="form-students"
           >
             <div>
-              <label>NOME COMPLETO</label>
-              <Input id="name" name="name" placeholder="Nome do aluno" />
+              <label>NOME DO FUNCIONÁRIO</label>
+              <Input id="employee" name="employee" placeholder="Nome do funcionário" />
+
               <label>ENDEREÇO DE E-MAIL</label>
               <Input
                 id="email"
@@ -116,11 +112,14 @@ export default function ManageStudent() {
                 type="email"
                 placeholder="exemplo@email.com"
               />
+
+              <label>EMPRESA</label>
+              <Input id="company" name="company" placeholder="Pertence a qual empresa?" />
             </div>
             <div className="infoStudent-second">
               <label>
-                IDADE
-                <Input id="age" name="age" type="number" placeholder="20" />
+                NUMERO DE CONTATO
+                <Input id="phone" name="phone" type="tel" placeholder="9 99232-9942" />
               </label>
               <label>
                 PESO (em kg)

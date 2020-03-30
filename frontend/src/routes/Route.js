@@ -15,7 +15,7 @@ const RouteWrapper = ({ component: Component, isPrivate, ...rest }) => {
   }
 
   if (signed && !isPrivate) {
-    return <Redirect to="/students" />;
+    return <Redirect to="/shopkeeper" />;
   }
 
   const Layout = signed ? DefaultLayout : AuthLayout;

@@ -3,8 +3,8 @@ import { Switch } from 'react-router-dom';
 import Route from './Route';
 
 import SignIn from '~/pages/SignIn';
-import Students from '~/pages/Students';
-import ManageStudent from '~/pages/Students/ManageStudent';
+import shopkeeper from '~/pages/shopkeeper';
+import ManageShopkeeper from '~/pages/shopkeeper/ManageShopkeeper';
 import Plans from '~/pages/Plans';
 import ManagePlans from '~/pages/Plans/ManagePlans';
 import Memberships from '~/pages/Memberships';
@@ -16,9 +16,9 @@ const Routes = () => {
     <Switch>
       <Route path="/" exact component={SignIn} />
 
-      <Route path="/students" exact component={Students} isPrivate />
-      <Route path="/students/new" component={ManageStudent} isPrivate />
-      <Route path="/students/:id" component={ManageStudent} isPrivate />
+      <Route path="/shopkeeper" exact component={shopkeeper} isPrivate />
+      <Route path="/shopkeeper/new" component={ManageShopkeeper} isPrivate />
+      <Route path="/shopkeeper/:id" component={ManageShopkeeper} isPrivate />
 
       <Route path="/plans" exact component={Plans} isPrivate />
       <Route path="/plans/new" component={ManagePlans} isPrivate />
