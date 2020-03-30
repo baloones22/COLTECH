@@ -31,13 +31,12 @@ export default function Header() {
         {width < 768 ? (
           <nav>
             <Menu />
-            <span>DOC LOJISTAS</span>
           </nav>
         ) : (
           <nav>
             <span>DOC LOJISTAS</span>
-            <LinkWrapper to="/students">Lojas</LinkWrapper>
-            <LinkWrapper to="/plans">Tipos de documentos</LinkWrapper>
+            <LinkWrapper to="/shopkeeper">Lojas</LinkWrapper>
+            <LinkWrapper to="/documents">Tipos de documentos</LinkWrapper>
             <LinkWrapper to="/memberships">Laudos</LinkWrapper>
             <LinkWrapper to="/helporders">Next new feature</LinkWrapper>
           </nav>

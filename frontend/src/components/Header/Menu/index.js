@@ -22,10 +22,11 @@ export default function Menu() {
       {isComponentVisible ? (
         <>
           <div ref={ref}>
-            <LinkWrapper to="/students">LOJISTAS</LinkWrapper>
-            <LinkWrapper to="/plans">DOCUMENTAÇÃO</LinkWrapper>
+            <span>DOC LOJJISTA</span>
+            <LinkWrapper to="/shopkeeper">LOJISTAS</LinkWrapper>
+            <LinkWrapper to="/documents">DOCUMENTAÇÃO</LinkWrapper>
             <LinkWrapper to="/memberships">LAUDOS</LinkWrapper>
-            <LinkWrapper to="/helporders">PEDIDOS DE AUXÍLIO</LinkWrapper>
+            <LinkWrapper to="/helporders">Next new feature</LinkWrapper>
           </div>
           <div />
         </>

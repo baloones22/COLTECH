@@ -20,12 +20,9 @@ export const Content = styled.div`
     align-items: center;
     width: 70%;
 
-    img {
-      width: 80px;
-      height: 40px;
+    span {
       margin-right: 30px;
       padding-right: 30px;
-      border-right: 1px solid #ddd;
     }
 
     a {

@@ -5,8 +5,8 @@ import Route from './Route';
 import SignIn from '~/pages/SignIn';
 import shopkeeper from '~/pages/shopkeeper';
 import ManageShopkeeper from '~/pages/shopkeeper/ManageShopkeeper';
-import Plans from '~/pages/Plans';
-import ManagePlans from '~/pages/Plans/ManagePlans';
+import Document from '~/pages/Document';
+import ManageDocuments from '~/pages/Document/ManageDocuments';
 import Memberships from '~/pages/Memberships';
 import ManageMembership from '~/pages/Memberships/ManageMembership';
 import HelpOrders from '~/pages/HelpOrders';
@@ -20,9 +20,9 @@ const Routes = () => {
       <Route path="/shopkeeper/new" component={ManageShopkeeper} isPrivate />
       <Route path="/shopkeeper/:id" component={ManageShopkeeper} isPrivate />
 
-      <Route path="/plans" exact component={Plans} isPrivate />
-      <Route path="/plans/new" component={ManagePlans} isPrivate />
-      <Route path="/plans/:id" component={ManagePlans} isPrivate />
+      <Route path="/documents" exact component={Document} isPrivate />
+      <Route path="/documents/new" component={ManageDocuments} isPrivate />
+      <Route path="/documents/:id" component={ManageDocuments} isPrivate />
 
       <Route path="/memberships" exact component={Memberships} isPrivate />
       <Route path="/memberships/new" component={ManageMembership} isPrivate />
