@@ -15,7 +15,7 @@
 <img alt="Last commit on GitHub" src="https://img.shields.io/github/last-commit/joaomenna1/COLTECH?color=7159C1">
 <img alt="Made by Joao nogueira" src="https://img.shields.io/badge/made%20by-joaomenna1-%20?color=7159C1">
 <img alt="Project top programing language" src="https://img.shields.io/github/languages/top/joaomenna1/COLTECH?color=7159C1">
-<img alt="GitHub license" src="https://github.com/joaomenna1/COLTECH/blob/master/LICENSE?color=7159C1">
+<img alt="GitHub license" src="https://img.shields.io/github/license/joaomenna1/COLTECH?color=7159C1">
 </p> 
 
 <p align="center">
