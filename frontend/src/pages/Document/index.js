@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import Loading from '~/components/Loading';
 import history from '~/services/history';
 import api from '~/services/api';
-import { formatPrice } from '~/helpers/format';
 
 import { Container, PlanList } from './styles';
 
@@ -20,14 +19,14 @@ export default function Document() {
   };
 
   useEffect(() => {
-    const loadPlans = async () => {
+    const loadDocuments = async () => {
       const response = await api.get('documents');
 
       setDocuments(response.data);
       setLoading(false);
     };
 
-    loadPlans();
+    loadDocuments();
   }, []);
 
   const handleEdit = id => {
@@ -77,7 +76,7 @@ export default function Document() {
               </button>
             </div>
           </div>
-          {!document.length ? (
+          {!documents.length ? (
             <p>Nenhum laudo encontrado...</p>
           ) : (
             <PlanList>
@@ -86,7 +85,7 @@ export default function Document() {
                 <strong style={textAlignStyle}>DURAÇÃO</strong>
                 <strong style={textAlignStyle}>VALOR p/ MÊS</strong>
               </li>
-              {document.map(document => (
+              {documents.map(document => (
                 <li key={document.id}>
                   <span>{document.title}</span>
                   <span style={textAlignStyle}>{`${document.duration} ${
