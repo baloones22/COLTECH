@@ -27,7 +27,7 @@ const Routes = () => {
       <Route path="/memberships" exact component={Memberships} isPrivate />
       <Route path="/memberships/new" component={ManageMembership} isPrivate />
       <Route
-        path="/memberships/:studentId"
+        path="/memberships/:shopkeeperId"
         component={ManageMembership}
         isPrivate
       />

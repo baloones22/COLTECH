@@ -25,7 +25,7 @@ export default function Memberships() {
 
   const loadMemberships = async () => {
     try {
-      const { data } = await api.get('memberships', {
+      const { data } = await api.get('reports', {
         params: { page },
       });
 
@@ -60,25 +60,25 @@ export default function Memberships() {
     loadMemberships();
   }, [page]); //eslint-disable-line
 
-  const handleEdit = (studentId, active) => {
+  const handleEdit = (shopkeeperId, active) => {
     if (active) {
       toast.info('Matrículas ativas não podem ser alteradas');
       return;
     }
-    history.push(`memberships/${studentId}`);
+    history.push(`reports/${shopkeeperId}`);
   };
 
   const handleDelete = membership => {
     confirmAlert({
       title: 'Confirme a exclusão',
-      message: `Deseja remover a matricula do aluno ${membership.student.name} ?`,
+      message: `Deseja remover a associação do laudo ao ${membership.shopkeeper.employee} ?`,
       buttons: [
         {
           label: 'Yes',
           onClick: async () => {
             try {
-              await api.delete(`memberships/${membership.student_id}`);
-              toast.success('Matricula excluida com sucesso');
+              await api.delete(`reports/${membership.shopkeeper_id}`);
+              toast.success('Associação excluida com sucesso');
               setPage(memberships.length === 1 ? page - 1 : page);
               setMemberships(memberships.filter(m => m.id !== membership.id));
             } catch (err) {
@@ -104,19 +104,19 @@ export default function Memberships() {
       ) : (
         <>
           <div>
-            <h1>Vinculação entre lojista(documento) e brmalls</h1>
+            <h1>Associação lojista x brmalls</h1>
             <div>
               <button
                 type="button"
                 onClick={() => history.push('memberships/new')}
               >
                 <MdAdd size={18} />
-                <span>adicionar documento</span>
+                <span>adicionar Laudo</span>
               </button>
             </div>
           </div>
           {!memberships.length ? (
-            <p>Nenhuma matrícula encontrada...</p>
+            <p>Nenhuma associação encontrada...</p>
           ) : (
             <>
               <MembershipList>
@@ -129,9 +129,9 @@ export default function Memberships() {
                 </li>
                 {memberships.map(membership => (
                   <li key={membership.id}>
-                    <span>{membership.student.name}</span>
+                    <span>{membership.student.employee}</span>
                     <span style={textAlignStyle}>
-                      {membership.plan ? membership.plan.title : 'sem plano'}
+                      {membership.plan ? membership.document.title : 'sem plano'}
                     </span>
                     <span style={textAlignStyle}>{membership.start_date} </span>
                     <span style={textAlignStyle}>{membership.end_date}</span>
@@ -146,7 +146,7 @@ export default function Memberships() {
                         type="button"
                         className="edit-button"
                         onClick={() =>
-                          handleEdit(membership.student_id, membership.active)
+                          handleEdit(membership.shopkeeper_id, membership.active)
                         }
                       >
                         editar

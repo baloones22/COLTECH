@@ -1,10 +1,9 @@
 import { object, date, number, string } from 'yup';
-import { addMonths, parseISO, isBefore, isAfter, endOfDay } from 'date-fns';
+import { addMonths, parseISO, isBefore, endOfDay } from 'date-fns';
 
 import Report from '../models/Report';
 import Document from '../models/Document';
 import ShopKeeper from '../models/ShopKeeper';
-/* controler que faz o relacionamento entre o document ae o shopkeeper */
 class ReportController {
   async store(req, res) {
     const schema = object().shape({
@@ -17,70 +16,42 @@ class ReportController {
       return res.status(400).json({ error: 'Validations fails' });
     }
 
-    const { start_date, document_id, shopkeeper_id } = req.body;
+    try {
+      const { start_date, document_id, shopkeeper_id } = req.body;
 
-    const parsedStartDate = parseISO(start_date);
+      const parsedStartDate = parseISO(start_date);
 
-    const checkDocumentExist = await Document.findByPk(document_id);
+      const document = await Document.findByPk(document_id);
 
-    if (checkDocumentExist) {
-      return res.status(401).json({ error: 'Document not found' });
-    }
+      if (!document) {
+        return res.status(401).json({ error: 'Document not found' });
+      }
 
-    const checkShopKeeperExist = await ShopKeeper.findByPk(shopkeeper_id);
+      const shopkeeper = await ShopKeeper.findByPk(shopkeeper_id);
 
-    if (checkShopKeeperExist) {
-      return res.status(401).json({ error: 'Shopkeeper not found' });
-    }
+      if (!shopkeeper) {
+        return res.status(401).json({ error: 'Shopkeeper not found' });
+      }
 
-    const checkShopKeeperHasReport = await Report.findOne({
-      where: {
+      if (isBefore(endOfDay(parsedStartDate), new Date())) {
+        return res.status(400).json({ error: 'Past dates are not permitted' });
+      }
+      const end_date = addMonths(parsedStartDate, document.duration);
+
+      const reportResponse = await Report.create({
         shopkeeper_id,
-      },
-    });
+        document_id,
+        start_date: parsedStartDate,
+        end_date,
+      });
 
-    if (
-      checkShopKeeperHasReport &&
-      (checkShopKeeperHasReport.active ||
-        isAfter(
-          endOfDay(checkShopKeeperHasReport.start_date),
-          endOfDay(new Date())
-        ))
-    ) {
-      return res
-        .status(400)
-        .json({ error: 'Shopkeeper already has one report' });
+
+      return res.json(reportResponse);
+
+    } catch (err) {
+      console.log(err);
     }
 
-    if (isBefore(endOfDay(parsedStartDate), new Date())) {
-      return res.status(400).json({ error: 'Past dates are not permitted' });
-    }
-
-    const end_date = addMonths(parsedStartDate, checkDocumentExist.duration);
-
-    const report = await Report.create({
-      shopkeeper_id,
-      document_id,
-      start_date: parsedStartDate,
-      end_date,
-    });
-
-    /* const reportInfo = await Report.findByPk(report.id, {
-      include: [
-        {
-          model: ShopKeeper,
-          as: 'shopkeeper',
-          attributes: ['id', 'employee', 'company', 'email', 'phone'],
-        },
-        {
-          model: Document,
-          as: 'document',
-          attributes: ['title'],
-        },
-      ],
-    }); */
-
-    return res.json(report);
   }
 
   async index(req, res) {
