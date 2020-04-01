@@ -31,19 +31,19 @@ export default function Memberships() {
 
       setTotalPages(Math.ceil(data.count / 10));
       setMemberships(
-        data.memberships.map(m => ({
-          ...m,
-          start_date: m.plan
-            ? format(parseISO(m.start_date), "d 'de' MMMM 'de' yyyy", {
+        data.reports.map(r => ({
+          ...r,
+          start_date: r.document
+            ? format(parseISO(r.start_date), "d 'de' MMMM 'de' yyyy", {
                 locale: pt,
               })
             : '',
-          end_date: m.plan
-            ? format(parseISO(m.end_date), "d 'de' MMMM 'de' yyyy", {
+          end_date: r.document
+            ? format(parseISO(r.end_date), "d 'de' MMMM 'de' yyyy", {
                 locale: pt,
               })
             : '',
-          active: !m.plan ? false : m.active,
+          active: !r.document ? false : r.active,
         }))
       );
     } catch (err) {
@@ -104,14 +104,14 @@ export default function Memberships() {
       ) : (
         <>
           <div>
-            <h1>Associação lojista x brmalls</h1>
+            <h1>Associação lojista / brmalls</h1>
             <div>
               <button
                 type="button"
                 onClick={() => history.push('memberships/new')}
               >
                 <MdAdd size={18} />
-                <span>adicionar Laudo</span>
+                <span>LAUDO LOJA</span>
               </button>
             </div>
           </div>
@@ -121,17 +121,17 @@ export default function Memberships() {
             <>
               <MembershipList>
                 <li>
-                  <strong>ALUNO</strong>
-                  <strong style={textAlignStyle}>PLANO</strong>
+                  <strong>LOJISTA</strong>
+                  <strong style={textAlignStyle}>TIPO DE DOCUMENTAÇAO</strong>
                   <strong style={textAlignStyle}>INÍCIO</strong>
                   <strong style={textAlignStyle}>TÉRMINO</strong>
                   <strong style={textAlignStyle}>ATIVA</strong>
                 </li>
                 {memberships.map(membership => (
                   <li key={membership.id}>
-                    <span>{membership.student.employee}</span>
+                    <span>{membership.shopkeeper.employee}</span>
                     <span style={textAlignStyle}>
-                      {membership.plan ? membership.document.title : 'sem plano'}
+                      {membership.document ? membership.document.title : 'sem laudo'}
                     </span>
                     <span style={textAlignStyle}>{membership.start_date} </span>
                     <span style={textAlignStyle}>{membership.end_date}</span>

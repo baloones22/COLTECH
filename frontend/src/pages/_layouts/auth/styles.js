@@ -22,6 +22,7 @@ export const Content = styled.div`
 
   img {
     margin-top: 10px;
+    width: 80%;
   }
 
   form {
