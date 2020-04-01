@@ -59,7 +59,7 @@ In order to connect to the database, you will need to enter the access informati
 # run migrations
 yarn sequelize db:migrate
   &
-npm run sequelize sequelize db:migrate
+npx run sequelize sequelize db:migrate
 
 
 # run api
@@ -70,8 +70,8 @@ yarn dev & npm run dev
 ```bash
 # in another tab of the terminal install the frontend dependencies and run it 
 cd frontend
-yarn
-yarn start & npm install
+yarn or npm install
+yarn start or npm run start
 ```
 Use this credentials to access the web application
 
