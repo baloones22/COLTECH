@@ -20,62 +20,63 @@ import { Container, Header, Student, Info } from './styles';
 
 const schema = Yup.object().shape({
   start_date: Yup.date().required('Campo data de inicio é obrigatório'),
-  plan_id: Yup.number().required('Campo plano é obrigatório'),
-  student_id: Yup.number().required('Campo aluno é obrigatório'),
+  document_id: Yup.number().required('Campo tipo de documento é obrigatório'),
+  shopkeeper_id: Yup.number().required('Campo lojista é obrigatório'),
 });
 
 export default function ManageMembership() {
-  const [membership, setMembership] = useState({ price: 0 }); // to prevent NaN on field 'Valor Final'
-  const [students, setStudents] = useState({});
-  const [plans, setPlans] = useState({});
+  const [membership, setMembership] = useState({}); // to prevent NaN on field 'Valor Final'
+  const [shopkeepers, setShopkeepers] = useState({});
+  const [documents, setDocuments] = useState({});
   const [loading, setLoading] = useState(true);
-  const { studentId } = useParams();
+  const { shopkeeperId } = useParams();
 
   useEffect(() => {
-    if (studentId) {
+    if (shopkeeperId) {
       const getMembership = async () => {
-        const { data } = await api.get(`/memberships/${studentId}`);
+        //busca a associação por id
+        const { data } = await api.get(`/reports/${shopkeeperId}`);
 
         await setMembership({
           ...data,
-          start_date: data.plan ? parseISO(data.start_date) : '',
-          end_date: data.plan ? parseISO(data.end_date) : '',
+          start_date: data.document ? parseISO(data.start_date) : '',
+          end_date: data.document ? parseISO(data.end_date) : '',
         });
       };
 
       getMembership();
     }
-  }, [studentId]);
+  }, [shopkeeperId]);
 
   useEffect(() => {
-    if (!studentId) {
-      const loadStudents = async () => {
-        const { data } = await api.get('students');
+    if (!shopkeeperId) {
+      const loadShopkeepers = async () => {
+        const { data } = await api.get('shopkeeper');
 
-        setStudents(data);
+        setShopkeepers(data);
       };
 
-      loadStudents();
+      loadShopkeepers();
     }
-  }, [studentId]);
+  }, [shopkeeperId]);
 
   useEffect(() => {
-    const loadPlans = async () => {
-      const { data } = await api.get('plans');
+    const loadDocuments = async () => {
+      const { data } = await api.get('reports');
 
-      setPlans(data);
+      setDocuments(data);
       setLoading(false);
     };
 
-    loadPlans();
+    loadDocuments();
   }, []);
 
-  const getStudents = async filter => {
+  const getShopkeeper = async filter => {
     if (!filter) {
       return [];
     }
 
-    const { data } = await api.get('students', {
+    const { data } = await api.get('shopkeeper', {
       params: {
         filter,
       },
@@ -84,7 +85,7 @@ export default function ManageMembership() {
   };
 
   const wait = 1500; // milliseconds
-  const loadOptions = inputValue => getStudents(inputValue);
+  const loadOptions = inputValue => getShopkeeper(inputValue);
   const debouncedLoadOptions = debounce(loadOptions, wait, {
     leading: true,
   });
@@ -96,8 +97,8 @@ export default function ManageMembership() {
       await schema.validate(
         {
           start_date: membership.start_date,
-          plan_id: membership.plan_id,
-          student_id: studentId || membership.student_id,
+          document_id: membership.document_id,
+          shopkeeper_id: shopkeeperId || membership.shopkeeper_id,
         },
         {
           abortEarly: false,
@@ -113,27 +114,27 @@ export default function ManageMembership() {
     setLoading(true);
 
     try {
-      if (studentId) {
+      if (shopkeeperId) {
         const data = {
           start_date: membership.start_date,
-          plan_id: membership.plan_id,
+          document_id: membership.document_id,
         };
 
-        await api.put(`memberships/${studentId}`, { ...data });
+        await api.put(`reports/${shopkeeperId}`, { ...data });
 
-        toast.success('Matrícula atualizada com sucesso');
-        history.push('/memberships');
+        toast.success('Associação atualizada com sucesso');
+        history.push(`/memberships/`);
       } else {
         const data = {
           start_date: membership.start_date,
-          plan_id: membership.plan_id,
-          student_id: membership.student_id,
+          document_id: membership.document_id,
+          shopkeeper_id: membership.shopkeeper_id,
         };
 
-        await api.post('memberships', { ...data });
+        await api.post('reports', { ...data });
 
-        toast.success('Matrícula realizada com sucesso');
-        history.push(`/memberships/${membership.student_id}`);
+        toast.success('Associação realizada com sucesso');
+        history.push(`/memberships/${membership.shopkeeper_id}`);
       }
     } catch (err) {
       toast.error(
@@ -183,7 +184,7 @@ export default function ManageMembership() {
         <>
           <Header>
             <h1>
-              {studentId ? 'Edição de matrícula' : 'Cadastro de matrícula'}
+              {shopkeeperId ? 'Edição de associação' : 'Cadastro da associação'}
             </h1>
             <div>
               <button
@@ -201,45 +202,44 @@ export default function ManageMembership() {
           </Header>
           <form id="form-memberships" onSubmit={handleSubmit}>
             <Student>
-              <label>ALUNO </label>
+              <label>LOJISTA </label>
               <AsyncSelect
-                isDisabled={studentId}
+                isDisabled={shopkeeperId}
                 styles={customStyles}
-                defaultOptions={students}
+                defaultOptions={shopkeepers}
                 loadOptions={inputValue => debouncedLoadOptions(inputValue)}
                 multiple={false}
-                name="students"
-                placeholder="Buscar aluno"
-                getOptionValue={student => student.id}
-                getOptionLabel={student => student.name}
-                value={membership ? membership.student : ''}
+                name="shopkeeper"
+                placeholder="Buscar lojista"
+                getOptionValue={shopkeeper => shopkeeper.id}
+                getOptionLabel={shopkeeper => shopkeeper.employe}
+                value={membership ? membership.shopkeeper : ''}
                 onChange={e =>
                   setMembership({
                     ...membership,
-                    student_id: e.id,
-                    student: e,
+                    shopkeeper_id: e.id,
+                    shopkeeper: e,
                   })
                 }
               />
             </Student>
             <Info>
               <label>
-                PLANO
+                Documento
                 <Select
                   styles={customStyles}
-                  options={plans}
+                  options={documents}
                   multiple={false}
-                  name="plan"
-                  placeholder="Buscar plano"
-                  value={membership ? membership.plan : ''}
-                  getOptionValue={plan => plan.id}
-                  getOptionLabel={plan => plan.title}
+                  name="document"
+                  placeholder="Tipos de documento"
+                  value={membership ? membership.document : ''}
+                  getOptionValue={document => document.id}
+                  getOptionLabel={document => document.title}
                   onChange={e =>
                     setMembership({
                       ...membership,
-                      plan_id: e.id,
-                      plan: e,
-                      price: e.price * e.duration,
+                      document_id: e.id,
+                      document: e,
                     })
                   }
                 />
@@ -253,15 +253,15 @@ export default function ManageMembership() {
                   placeholder="Escolha a data"
                   selected={membership ? membership.start_date : ''}
                   onChange={date => {
-                    if (!membership.plan) {
-                      toast.error('Favor selecionar um plano!');
+                    if (!membership.document) {
+                      toast.error('Favor selecionar um tipo de documento!');
                       return;
                     }
                     if (date) {
                       setMembership({
                         ...membership,
                         start_date: date,
-                        end_date: addMonths(date, membership.plan.duration),
+                        end_date: addMonths(date, membership.document.duration),
                       });
                     }
                   }}
@@ -282,7 +282,7 @@ export default function ManageMembership() {
                 <input
                   type="text"
                   name="price"
-                  value={membership ? formatPrice(membership.price) : ''}
+                  value={membership ? formatPrice(membership.duration) : ''}
                   disabled
                 />
               </label>

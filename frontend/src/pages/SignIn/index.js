@@ -7,7 +7,7 @@ import { signInRequest } from '~/store/modules/auth/actions';
 
 import Loading from '~/components/Loading';
 
-import logo from '~/assets/logo.svg';
+import logo from '~/assets/Logo.png';
 
 const schema = Yup.object().shape({
   email: Yup.string()
