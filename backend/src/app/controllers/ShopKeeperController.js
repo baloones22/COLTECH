@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 import { Op } from 'sequelize';
-import shopKeeper from '../models/ShopKeeper';
+import ShopKeeper from '../models/ShopKeeper';
 
 class ShopKeeperController {
   async store(req, res) {
@@ -17,7 +17,7 @@ class ShopKeeperController {
       return res.status(400).json({ error: 'Validations fails' });
     }
 
-    const shopKeepExist = await shopKeeper.findOne({
+    const shopKeepExist = await ShopKeeper.findOne({
       where: { email: req.body.email },
     });
 
@@ -27,7 +27,7 @@ class ShopKeeperController {
         .json({ error: 'The email shopkeeper already exist' });
     }
 
-    const { id, employee, company, email, phone } = await shopKeeper.create(
+    const { id, employee, company, email, phone } = await ShopKeeper.create(
       req.body
     );
 
@@ -45,7 +45,7 @@ class ShopKeeperController {
 
     if(filter || page) {
       if(!page) {
-        const shopkeeper = await shopKeeper.findAll({
+        const shopkeeper = await ShopKeeper.findAll({
           where: {
             employee: {
               [Op.iLike] : `%${filter}%`,
@@ -56,7 +56,7 @@ class ShopKeeperController {
         return res.json(shopkeeper);
       }
 
-      const { count, rows: shopkeeper } = await shopKeeper.findAndCountAll({
+      const { count, rows: shopkeeper } = await ShopKeeper.findAndCountAll({
         where: {
           employee: {
             [Op.iLike]: `%${filter}%`,
@@ -71,7 +71,7 @@ class ShopKeeperController {
       return res.json({ shopkeeper, count });
     }
 
-    const shopkeeper = await shopKeeper.findAll({
+    const shopkeeper = await ShopKeeper.findAll({
       order: ['employee'],
     });
 
@@ -82,9 +82,9 @@ class ShopKeeperController {
   async show(req, res) {
     const { id } = req.params;
 
-    const shopkeeper = await shopKeeper.findByPk(id);
+    const shopkeeper = await ShopKeeper.findByPk(id);
 
-    if (!shopKeeper) {
+    if (!shopkeeper) {
       return res.status(401).json({ error: 'shopkeepr does not exist' });
     }
 
@@ -107,7 +107,7 @@ class ShopKeeperController {
       return res.status(400).json({ error: 'Validations fails' });
     }
 
-    const shopkeeper = await shopKeeper.findByPk(id);
+    const shopkeeper = await ShopKeeper.findByPk(id);
 
     const { employee, company, email, phone } = await shopkeeper.update(
       req.body

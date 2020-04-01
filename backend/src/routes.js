@@ -40,9 +40,9 @@ routes.delete('/shopkeeper/:id', ShopkeeperController.delete);
 /* Management reports */
 routes.post('/reports', ReportController.store);
 routes.get('/reports', ReportController.index);
-routes.get('/reports/:id', ReportController.show);
-routes.put('reports/:id', ReportController.update);
-routes.delete('reports/:id', ReportController.delete);
+routes.get('/reports/:shopkeeperId', ReportController.show);
+routes.put('/reports/:shopkeeperId', ReportController.update);
+routes.delete('/reports/:shopkeeperId', ReportController.delete);
 
 /* User admins  */
 routes.post('/user_admin', UserController.store);

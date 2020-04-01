@@ -170,11 +170,21 @@ class ReportController {
   }
 
   async delete(req, res) {
-    Report.destroy({
-      where: { id: req.params.id },
-    })
-      .then(() => res.json({ message: 'removed.' }))
-      .catch(err => res.json({ error: 'Fail in methods remove' }));
+    const { shopkeeperId } = req.params;
+
+    const membership = await Report.findOne({
+      where: {
+        shopkeeper_id: shopkeeperId,
+      },
+    });
+
+    if(!membership) {
+      return res.status(400).json({ error: "Shopkeeper membership not found" })
+    }
+
+    await membership.destroy();
+
+    return res.status(204).send();
   }
 }
 

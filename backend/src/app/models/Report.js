@@ -29,9 +29,15 @@ class Report extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.ShopKeeper, { foreignKey: 'shopkeeper_id', as: 'shopkeeper' });
+    this.belongsTo(models.ShopKeeper, {
+      foreignKey: 'shopkeeper_id',
+      as: 'shopkeeper'
+    });
 
-    this.belongsTo(models.Document, { foreignKey: 'document_id', as: 'document' });
+    this.belongsTo(models.Document, {
+      foreignKey: 'document_id',
+      as: 'document'
+    });
 
   }
 }
