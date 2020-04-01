@@ -1,6 +1,7 @@
 export default {
-  primary: '#ee4d64',
+  primary: '#194390',
   editButton: '#4d85ee',
+  canceledButton: '#e02041',
   backButton: '#ccc',
   white: '#fff',
   border: '#ddd',
