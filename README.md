@@ -74,7 +74,8 @@ yarn or npm install
 yarn start or npm run start
 ```
 Use this credentials to access the web application
-
+<blockquote><strong>email:</strong> admin@coltech.com</blockquote>
+<blockquote> <strong>senha:</strong> 123456</blockquote>
 ---
 
 ## :page_facing_up: License
