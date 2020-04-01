@@ -117,12 +117,17 @@ class ShopKeeperController {
   }
 
   async delete(req, res) {
-    shopKeeper
-      .destroy({
-        where: { id: req.params.id },
-      })
-      .then(() => res.json({ message: 'removed.' }))
-      .catch(err => res.json({ error: 'Fail in methods remove' }));
+    const { id } = req.params;
+
+    const shopkeeper = await ShopKeeper.findByPk(id);
+
+    if (!shopkeeper) {
+      return res.status(400).json({ error: 'Shopkeeper not found.'});
+    }
+
+    await shopkeeper.destroy();
+
+    return res.status(204).send();
   }
 }
 
