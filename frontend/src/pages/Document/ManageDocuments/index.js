@@ -12,7 +12,7 @@ import api from '~/services/api';
 import { Container, Header } from './styles';
 
 const schema = Yup.object().shape({
-  title: Yup.string().required('Campo plano é obrigatório'),
+  title: Yup.string().required('Campo title é obrigatório'),
   duration: Yup.number()
     .required('Campo duração é obrigatório')
     .integer()
@@ -77,7 +77,7 @@ export default function StoreDocument() {
           price: unFormat(price),
         });
 
-        toast.success('Plano atualizado com sucesso');
+        toast.success('Tipo de Laudo atualizado com sucesso');
         history.push('/documents');
       } else {
         const { data } = await api.post('documents', {
@@ -106,7 +106,7 @@ export default function StoreDocument() {
       ) : (
         <>
           <Header>
-            <h1>{id ? 'Edição de documento' : 'Cadastro de documento'}</h1>
+            <h1>{id ? 'Edição de Laudo' : 'Cadastro de Laudo'}</h1>
             <div>
               <button type="button" onClick={() => history.push('/documents')}>
                 <MdKeyboardArrowLeft size={20} color="#fff" />
@@ -125,7 +125,7 @@ export default function StoreDocument() {
                 id="title"
                 name="title"
                 type="name"
-                placeholder="Start"
+                placeholder="Nome do tipo de Laudo"
                 value={title || ''}
                 onChange={({ target }) => setTitle(target.value)}
               />
@@ -141,22 +141,6 @@ export default function StoreDocument() {
                   value={duration || ''}
                   onChange={({ target }) => setDuration(target.value)}
                 />
-              </label>
-              <label>
-                PREÇO MENSAL
-                <NumberFormat
-                  thousandSeparator="."
-                  decimalSeparator=","
-                  fixedDecimalScale={2}
-                  prefix="R$ "
-                  name="price"
-                  value={price || ''}
-                  onChange={({ target }) => setPrice(target.value)}
-                />
-              </label>
-              <label>
-                PREÇO TOTAL
-                <input type="text" name="total" value={total || ''} disabled />
               </label>
             </div>
           </form>

@@ -39,13 +39,19 @@ export const Container = styled.div`
     }
 
     div + div {
-      flex-direction: row;
-
       label {
-        width: 100%;
+        font-weight: bold;
+        color: ${colors.darkGray};
+        margin-top: 25px;
       }
-      label + label {
-        margin-left: 16px;
+
+      input {
+        width: 100%;
+        height: 44px;
+        margin: 5px 0 5px;
+        padding: 0 15px;
+        border-radius: 4px;
+        border: 1px solid ${colors.border};
       }
     }
   }
