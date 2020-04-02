@@ -43,7 +43,7 @@ export default function Document() {
           onClick: async () => {
             try {
               await api.delete(`documents/${document.id}`);
-              toast.success('Laudo excluido com sucesso');
+              toast.success('Tipo de Laudo excluido com sucesso');
               setDocuments(documents.filter(s => s.id !== document.id));
             } catch (err) {
               toast.error(
@@ -83,7 +83,6 @@ export default function Document() {
               <li>
                 <strong>TÍTULO</strong>
                 <strong style={textAlignStyle}>DURAÇÃO</strong>
-                <strong style={textAlignStyle}>VALOR p/ MÊS</strong>
               </li>
               {documents.map(document => (
                 <li key={document.id}>
@@ -91,7 +90,8 @@ export default function Document() {
                   <span style={textAlignStyle}>{`${document.duration} ${
                     document.duration === 1 ? 'mês' : 'meses'
                   }`}</span>
-                  <span style={textAlignStyle}>1220,00</span>
+{/*                   <span style={textAlignStyle}>sad</span>
+ */}
                   <div>
                     <button type="button" onClick={() => handleEdit(document.id)}>
                       editar
@@ -100,6 +100,7 @@ export default function Document() {
                       apagar
                     </button>
                   </div>
+
                 </li>
               ))}
             </PlanList>
