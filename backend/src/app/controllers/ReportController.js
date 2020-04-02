@@ -1,5 +1,5 @@
 import { object, date, number, string } from 'yup';
-import { addMonths, parseISO, isBefore, endOfDay } from 'date-fns';
+import { addMonths, parseISO, isBefore, endOfDay, isAfter } from 'date-fns';
 
 import Report from '../models/Report';
 import Document from '../models/Document';
@@ -30,8 +30,27 @@ class ReportController {
       const shopkeeper = await ShopKeeper.findByPk(shopkeeper_id);
 
       if (!shopkeeper) {
-        return res.status(401).json({ error: 'Shopkeeper not found' });
+        return res.status(400).json({ error: 'Shopkeeper not found' });
       }
+
+     /*  const checkShopkeeperHasMembership = await Report.findOne({
+        where: {
+          shopkeeper_id,
+        },
+      });
+
+      if (
+        checkShopkeeperHasMembership &&
+          (checkShopkeeperHasMembership.active ||
+            isAfter(
+              endOfDay(checkShopkeeperHasMembership.start_date),
+              endOfDay(new Date())
+            ))
+      ) {
+        return res
+          .status(400)
+          .json({ error: 'Shopkeeper already has a active mambership'})
+      } */
 
       if (isBefore(endOfDay(parsedStartDate), new Date())) {
         return res.status(400).json({ error: 'Past dates are not permitted' });
