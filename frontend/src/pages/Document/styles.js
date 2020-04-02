@@ -102,10 +102,10 @@ export const PlanList = styled.ul`
       }
 
       button + button {
-        color: ${colors.primary};
+        color: ${colors.canceledButton};
 
         &:hover {
-          color: ${darken(0.1, `${colors.primary}`)};
+          color: ${darken(0.1, `${colors.canceledButton}`)};
         }
       }
     }
