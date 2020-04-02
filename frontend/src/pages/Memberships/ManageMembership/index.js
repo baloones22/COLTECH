@@ -122,7 +122,7 @@ export default function ManageMembership() {
 
         await api.put(`reports/${shopkeeperId}`, { ...data });
 
-        toast.success('Associação atualizada com sucesso');
+        toast.success('Vinculação atualizada com sucesso');
         history.push(`/memberships/`);
       } else {
         const data = {
@@ -133,7 +133,7 @@ export default function ManageMembership() {
 
         await api.post('reports', { ...data });
 
-        toast.success('Associação realizada com sucesso');
+        toast.success('Vinculação realizada com sucesso');
         history.push(`/memberships/${membership.shopkeeper_id}`);
       }
     } catch (err) {
@@ -184,7 +184,7 @@ export default function ManageMembership() {
         <>
           <Header>
             <h1>
-              {shopkeeperId ? 'Edição de associação' : 'Cadastro da associação'}
+              {shopkeeperId ? 'Edição de vinculação' : 'Cadastro da vinculação'}
             </h1>
             <div>
               <button
@@ -202,7 +202,7 @@ export default function ManageMembership() {
           </Header>
           <form id="form-memberships" onSubmit={handleSubmit}>
             <Student>
-              <label>LOJISTA </label>
+              <label>Nome do Lojista </label>
               <AsyncSelect
                 isDisabled={shopkeeperId}
                 styles={customStyles}
@@ -212,7 +212,7 @@ export default function ManageMembership() {
                 name="shopkeeper"
                 placeholder="Buscar lojista"
                 getOptionValue={shopkeeper => shopkeeper.id}
-                getOptionLabel={shopkeeper => shopkeeper.employe}
+                getOptionLabel={shopkeeper => shopkeeper.employee}
                 value={membership ? membership.shopkeeper : ''}
                 onChange={e =>
                   setMembership({
@@ -231,17 +231,18 @@ export default function ManageMembership() {
                   options={documents}
                   multiple={false}
                   name="document"
-                  placeholder="Tipos de documento"
+                  placeholder="Buscar plano"
                   value={membership ? membership.document : ''}
-                  getOptionValue={document => document.id}
-                  getOptionLabel={document => document.title}
+                  getOptionValue={plan => document.id}
+                  getOptionLabel={plan => document.title}
                   onChange={e =>
                     setMembership({
                       ...membership,
                       document_id: e.id,
-                      document: e,
+                      document: e.title,
                     })
                   }
+
                 />
               </label>
               <label>
@@ -268,22 +269,13 @@ export default function ManageMembership() {
                 />
               </label>
               <label>
-                DATA DE TÉRMINO
+                FIM DA VALIDADE
                 <DatePicker
                   dateFormat="dd/MM/yyyy"
                   name="end_date"
                   disabled
                   placeholder="Data de termino"
                   selected={membership ? membership.end_date : ''}
-                />
-              </label>
-              <label>
-                VALOR FINAL
-                <input
-                  type="text"
-                  name="price"
-                  value={membership ? formatPrice(membership.duration) : ''}
-                  disabled
                 />
               </label>
             </Info>

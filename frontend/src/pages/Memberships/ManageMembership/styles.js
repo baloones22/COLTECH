@@ -93,8 +93,7 @@ export const Info = styled.div`
   }
 
   input[name='start_date'],
-  input[name='end_date'],
-  input[name='price'] {
+  input[name='end_date']{
     width: 100%;
     height: 45px;
     margin: 7px 0 0;

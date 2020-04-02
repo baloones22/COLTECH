@@ -62,7 +62,7 @@ export default function Memberships() {
 
   const handleEdit = (shopkeeperId, active) => {
     if (active) {
-      toast.info('Matrículas ativas não podem ser alteradas');
+      toast.info('Vinculações ativas não podem ser alteradas');
       return;
     }
     history.push(`reports/${shopkeeperId}`);
@@ -104,7 +104,7 @@ export default function Memberships() {
       ) : (
         <>
           <div>
-            <h1>Associação lojista / brmalls</h1>
+            <h1>Vinculação Lojista - Laudo</h1>
             <div>
               <button
                 type="button"
@@ -116,13 +116,13 @@ export default function Memberships() {
             </div>
           </div>
           {!memberships.length ? (
-            <p>Nenhuma associação encontrada...</p>
+            <p>Nenhuma Vinculação encontrada...</p>
           ) : (
             <>
               <MembershipList>
                 <li>
                   <strong>LOJISTA</strong>
-                  <strong style={textAlignStyle}>TIPO DE DOCUMENTAÇAO</strong>
+                  <strong style={textAlignStyle}>TIPO DE LAUDO</strong>
                   <strong style={textAlignStyle}>INÍCIO</strong>
                   <strong style={textAlignStyle}>TÉRMINO</strong>
                   <strong style={textAlignStyle}>ATIVA</strong>
