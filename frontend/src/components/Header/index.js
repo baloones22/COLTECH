@@ -34,7 +34,7 @@ export default function Header() {
           </nav>
         ) : (
           <nav>
-            <span>DOC'S LOJISTAS</span>
+            <span>DOC'S LOJISTA</span>
             <LinkWrapper to="/shopkeeper">Lojas</LinkWrapper>
             <LinkWrapper to="/documents">Tipos de documentos</LinkWrapper>
             <LinkWrapper to="/memberships">Laudos</LinkWrapper>
