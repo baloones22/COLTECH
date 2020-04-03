@@ -1,11 +1,13 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import NumberFormat from 'react-number-format';
+/* import NumberFormat from 'react-number-format';
+ */
 import { MdKeyboardArrowLeft, MdSave } from 'react-icons/md';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
-import { unFormat, formatPrice } from '~/helpers/format';
+/* import { formatPrice } from '~/helpers/format';
+ */
 import Loading from '~/components/Loading';
 import history from '~/services/history';
 import api from '~/services/api';
@@ -22,7 +24,6 @@ const schema = Yup.object().shape({
 export default function StoreDocument() {
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState(0);
-  const [price, setPrice] = useState(0);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
@@ -34,17 +35,12 @@ export default function StoreDocument() {
 
         setTitle(data.title);
         setDuration(data.duration);
-        setPrice(formatPrice(data.price));
         setLoading(false);
       };
 
       getPlan();
     }
   }, [id]);
-
-  const total = useMemo(() => {
-    return formatPrice(unFormat(price) * duration);
-  }, [duration, price]);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -54,7 +50,6 @@ export default function StoreDocument() {
         {
           title,
           duration,
-          price: unFormat(price),
         },
         {
           abortEarly: false,
@@ -74,7 +69,6 @@ export default function StoreDocument() {
         await api.put(`documents/${id}`, {
           title,
           duration,
-          price: unFormat(price),
         });
 
         toast.success('Tipo de Laudo atualizado com sucesso');
@@ -83,7 +77,6 @@ export default function StoreDocument() {
         const { data } = await api.post('documents', {
           title,
           duration,
-          price: unFormat(price),
         });
 
         toast.success('Documento cadastrado com sucesso');

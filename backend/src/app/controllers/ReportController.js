@@ -7,27 +7,32 @@ import ShopKeeper from '../models/ShopKeeper';
 class ReportController {
   async store(req, res) {
     const schema = object().shape({
-      start_date: date().required(),
-      document_id: number().required(),
-      shopkeeper_id: number().required(),
+      start_date: date(),
+      shopkeeper_id: number(),
+      document_id: number(),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validations fails' });
     }
 
-    try {
       const { start_date, document_id, shopkeeper_id } = req.body;
+
+      console.log("backend requisição", { start_date, document_id, shopkeeper_id });
 
       const parsedStartDate = parseISO(start_date);
 
       const document = await Document.findByPk(document_id);
 
+      console.log("ID DOCUMENT -> ", document_id);
+
       if (!document) {
-        return res.status(401).json({ error: 'Document not found' });
+        return res.status(400).json({ error: 'Document not found' });
       }
 
       const shopkeeper = await ShopKeeper.findByPk(shopkeeper_id);
+
+      console.log("ID LOJISTA -> ",shopkeeper_id);
 
       if (!shopkeeper) {
         return res.status(400).json({ error: 'Shopkeeper not found' });
@@ -67,10 +72,6 @@ class ReportController {
 
       return res.json(reportResponse);
 
-    } catch (err) {
-      console.log(err);
-    }
-
   }
 
   async index(req, res) {
@@ -97,7 +98,7 @@ class ReportController {
         {
           model: Document,
           as: 'document',
-          attributes: ['title'],
+          attributes: [ 'id' ,'title'],
         },
       ],
     });

@@ -43,12 +43,12 @@ class ShopKeeperController {
   async index(req, res) {
     const { page, filter } = req.query;
 
-    if(filter || page) {
-      if(!page) {
+    if (filter || page) {
+      if (!page) {
         const shopkeeper = await ShopKeeper.findAll({
           where: {
             employee: {
-              [Op.iLike] : `%${filter}%`,
+              [Op.iLike]: `%${filter}%`,
             },
           },
         });
@@ -65,7 +65,7 @@ class ShopKeeperController {
 
         order: ['employee'],
         limit: 10,
-        offset: (page- 1) * 10,
+        offset: (page - 1) * 10,
       });
 
       return res.json({ shopkeeper, count });
@@ -76,7 +76,6 @@ class ShopKeeperController {
     });
 
     return res.json(shopkeeper);
-
   }
 
   async show(req, res) {
@@ -122,7 +121,7 @@ class ShopKeeperController {
     const shopkeeper = await ShopKeeper.findByPk(id);
 
     if (!shopkeeper) {
-      return res.status(400).json({ error: 'Shopkeeper not found.'});
+      return res.status(400).json({ error: 'Shopkeeper not found.' });
     }
 
     await shopkeeper.destroy();

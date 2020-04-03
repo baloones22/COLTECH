@@ -31,19 +31,19 @@ export default function Memberships() {
 
       setTotalPages(Math.ceil(data.count / 10));
       setMemberships(
-        data.reports.map(r => ({
-          ...r,
-          start_date: r.document
-            ? format(parseISO(r.start_date), "d 'de' MMMM 'de' yyyy", {
+        data.reports.map(m => ({
+          ...m,
+          start_date: m.document
+            ? format(parseISO(m.start_date), "d 'de' MMMM 'de' yyyy", {
                 locale: pt,
               })
             : '',
-          end_date: r.document
-            ? format(parseISO(r.end_date), "d 'de' MMMM 'de' yyyy", {
+          end_date: m.document
+            ? format(parseISO(m.end_date), "d 'de' MMMM 'de' yyyy", {
                 locale: pt,
               })
             : '',
-          active: !r.document ? false : r.active,
+          active: !m.document ? false : m.active,
         }))
       );
     } catch (err) {
@@ -60,25 +60,25 @@ export default function Memberships() {
     loadMemberships();
   }, [page]); //eslint-disable-line
 
-  const handleEdit = (shopkeeperId, active) => {
-    if (active) {
-      toast.info('Vinculações ativas não podem ser alteradas');
+  const handleEdit = (shopkeeperId) => {
+    /* if (active) {
+      toast.info('Matrículas ativas não podem ser alteradas');
       return;
-    }
-    history.push(`reports/${shopkeeperId}`);
+    } */
+    history.push(`memberships/${shopkeeperId}`);
   };
 
   const handleDelete = membership => {
     confirmAlert({
       title: 'Confirme a exclusão',
-      message: `Deseja remover a associação do laudo ao ${membership.shopkeeper.employee} ?`,
+      message: `Deseja remover a matricula do aluno ${membership.shopkeeper.employee} ?`,
       buttons: [
         {
           label: 'Yes',
           onClick: async () => {
             try {
               await api.delete(`reports/${membership.shopkeeper_id}`);
-              toast.success('Associação excluida com sucesso');
+              toast.success('Vinculação excluida com sucesso');
               setPage(memberships.length === 1 ? page - 1 : page);
               setMemberships(memberships.filter(m => m.id !== membership.id));
             } catch (err) {
@@ -104,14 +104,14 @@ export default function Memberships() {
       ) : (
         <>
           <div>
-            <h1>Vinculação Lojista - Laudo</h1>
+            <h1>Vincular Laudo e Lojista</h1>
             <div>
               <button
                 type="button"
                 onClick={() => history.push('memberships/new')}
               >
                 <MdAdd size={18} />
-                <span>LAUDO LOJA</span>
+                <span>CADASTRAR</span>
               </button>
             </div>
           </div>
@@ -122,16 +122,16 @@ export default function Memberships() {
               <MembershipList>
                 <li>
                   <strong>LOJISTA</strong>
-                  <strong style={textAlignStyle}>TIPO DE LAUDO</strong>
+                  <strong style={textAlignStyle}>Laudo</strong>
                   <strong style={textAlignStyle}>INÍCIO</strong>
-                  <strong style={textAlignStyle}>TÉRMINO</strong>
+                  <strong style={textAlignStyle}>FIM DA VALIDADE</strong>
                   <strong style={textAlignStyle}>ATIVA</strong>
                 </li>
                 {memberships.map(membership => (
                   <li key={membership.id}>
                     <span>{membership.shopkeeper.employee}</span>
                     <span style={textAlignStyle}>
-                      {membership.document ? membership.document.title : 'sem laudo'}
+                      {membership.document ? membership.document.title : 'sem Laudo'}
                     </span>
                     <span style={textAlignStyle}>{membership.start_date} </span>
                     <span style={textAlignStyle}>{membership.end_date}</span>
@@ -146,7 +146,7 @@ export default function Memberships() {
                         type="button"
                         className="edit-button"
                         onClick={() =>
-                          handleEdit(membership.shopkeeper_id, membership.active)
+                          handleEdit(membership.shopkeeper_id)
                         }
                       >
                         editar

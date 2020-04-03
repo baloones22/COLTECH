@@ -37,7 +37,7 @@ export default function Header() {
             <span>DOC'S LOJISTA</span>
             <LinkWrapper to="/shopkeeper">Lojas</LinkWrapper>
             <LinkWrapper to="/documents">Laudos</LinkWrapper>
-            <LinkWrapper to="/memberships">Vincular</LinkWrapper>
+            <LinkWrapper to="/memberships">Vinculação</LinkWrapper>
             <LinkWrapper to="/helporders">Next new feature</LinkWrapper>
           </nav>
         )}

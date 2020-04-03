@@ -14,18 +14,17 @@ import Loading from '~/components/Loading';
 import history from '~/services/history';
 import api from '~/services/api';
 import colors from '~/styles/colors';
-import { formatPrice } from '~/helpers/format';
 
 import { Container, Header, Student, Info } from './styles';
 
 const schema = Yup.object().shape({
   start_date: Yup.date().required('Campo data de inicio é obrigatório'),
-  document_id: Yup.number().required('Campo tipo de documento é obrigatório'),
-  shopkeeper_id: Yup.number().required('Campo lojista é obrigatório'),
+  document_id: Yup.number(),
+  shopkeeper_id: Yup.number(),
 });
 
 export default function ManageMembership() {
-  const [membership, setMembership] = useState({}); // to prevent NaN on field 'Valor Final'
+  const [membership, setMembership] = useState();
   const [shopkeepers, setShopkeepers] = useState({});
   const [documents, setDocuments] = useState({});
   const [loading, setLoading] = useState(true);
@@ -34,13 +33,13 @@ export default function ManageMembership() {
   useEffect(() => {
     if (shopkeeperId) {
       const getMembership = async () => {
-        //busca a associação por id
         const { data } = await api.get(`/reports/${shopkeeperId}`);
-
+        console.log("frontend reports ->", {data})
         await setMembership({
           ...data,
           start_date: data.document ? parseISO(data.start_date) : '',
           end_date: data.document ? parseISO(data.end_date) : '',
+
         });
       };
 
@@ -50,28 +49,28 @@ export default function ManageMembership() {
 
   useEffect(() => {
     if (!shopkeeperId) {
-      const loadShopkeepers = async () => {
+      const loadStudents = async () => {
         const { data } = await api.get('shopkeeper');
 
         setShopkeepers(data);
       };
 
-      loadShopkeepers();
+      loadStudents();
     }
   }, [shopkeeperId]);
 
   useEffect(() => {
-    const loadDocuments = async () => {
-      const { data } = await api.get('reports');
-
+    const loadPlans = async () => {
+      const { data } = await api.get('documents');
       setDocuments(data);
+
       setLoading(false);
     };
 
-    loadDocuments();
+    loadPlans();
   }, []);
 
-  const getShopkeeper = async filter => {
+  const getStudents = async filter => {
     if (!filter) {
       return [];
     }
@@ -85,7 +84,7 @@ export default function ManageMembership() {
   };
 
   const wait = 1500; // milliseconds
-  const loadOptions = inputValue => getShopkeeper(inputValue);
+  const loadOptions = inputValue => getStudents(inputValue);
   const debouncedLoadOptions = debounce(loadOptions, wait, {
     leading: true,
   });
@@ -122,8 +121,8 @@ export default function ManageMembership() {
 
         await api.put(`reports/${shopkeeperId}`, { ...data });
 
-        toast.success('Vinculação atualizada com sucesso');
-        history.push(`/memberships/`);
+        toast.success('laudo atualizado com sucesso');
+        history.push('/memberships');
       } else {
         const data = {
           start_date: membership.start_date,
@@ -131,9 +130,10 @@ export default function ManageMembership() {
           shopkeeper_id: membership.shopkeeper_id,
         };
 
-        await api.post('reports', { ...data });
+        await api.post('reports', {...data});
 
-        toast.success('Vinculação realizada com sucesso');
+
+        toast.success('Vinclação realizada com sucesso');
         history.push(`/memberships/${membership.shopkeeper_id}`);
       }
     } catch (err) {
@@ -184,7 +184,7 @@ export default function ManageMembership() {
         <>
           <Header>
             <h1>
-              {shopkeeperId ? 'Edição de vinculação' : 'Cadastro da vinculação'}
+              {shopkeeperId ? 'Edição de matrícula' : 'Cadastro de matrícula'}
             </h1>
             <div>
               <button
@@ -202,7 +202,7 @@ export default function ManageMembership() {
           </Header>
           <form id="form-memberships" onSubmit={handleSubmit}>
             <Student>
-              <label>Nome do Lojista </label>
+              <label>LOJISTA </label>
               <AsyncSelect
                 isDisabled={shopkeeperId}
                 styles={customStyles}
@@ -210,7 +210,7 @@ export default function ManageMembership() {
                 loadOptions={inputValue => debouncedLoadOptions(inputValue)}
                 multiple={false}
                 name="shopkeeper"
-                placeholder="Buscar lojista"
+                placeholder="Buscar Lojista"
                 getOptionValue={shopkeeper => shopkeeper.id}
                 getOptionLabel={shopkeeper => shopkeeper.employee}
                 value={membership ? membership.shopkeeper : ''}
@@ -225,24 +225,23 @@ export default function ManageMembership() {
             </Student>
             <Info>
               <label>
-                Documento
+                LAUDO
                 <Select
                   styles={customStyles}
                   options={documents}
                   multiple={false}
                   name="document"
-                  placeholder="Buscar plano"
+                  placeholder="Buscar laudo"
                   value={membership ? membership.document : ''}
-                  getOptionValue={plan => document.id}
-                  getOptionLabel={plan => document.title}
+                  getOptionValue={document => document.id}
+                  getOptionLabel={document => document.title}
                   onChange={e =>
                     setMembership({
                       ...membership,
                       document_id: e.id,
-                      document: e.title,
+                      document: e,
                     })
                   }
-
                 />
               </label>
               <label>
@@ -255,7 +254,7 @@ export default function ManageMembership() {
                   selected={membership ? membership.start_date : ''}
                   onChange={date => {
                     if (!membership.document) {
-                      toast.error('Favor selecionar um tipo de documento!');
+                      toast.error('Favor selecionar um laudo!');
                       return;
                     }
                     if (date) {
@@ -269,7 +268,7 @@ export default function ManageMembership() {
                 />
               </label>
               <label>
-                FIM DA VALIDADE
+                DATA DE TÉRMINO
                 <DatePicker
                   dateFormat="dd/MM/yyyy"
                   name="end_date"

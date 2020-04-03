@@ -62,11 +62,11 @@ export const Header = styled.div`
     }
 
     button + button {
-      background: ${colors.primary};
+      background: ${colors.canceledButton};
       margin-left: 16px;
 
       &:hover {
-        background: ${darken(0.03, `${colors.primary}`)};
+        background: ${darken(0.03, `${colors.canceledButton}`)};
       }
     }
   }

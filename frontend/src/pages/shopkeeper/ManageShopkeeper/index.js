@@ -9,7 +9,6 @@ import * as Yup from 'yup';
 import Loading from '~/components/Loading';
 import history from '~/services/history';
 import api from '~/services/api';
-import HeightInput from '~/components/HeightInput';
 import { Container, Header } from './styles';
 
 const schema = Yup.object().shape({
@@ -121,20 +120,7 @@ export default function ManageShopkeepers() {
                 NUMERO DE CONTATO
                 <Input id="phone" name="phone" type="tel" placeholder="9 99232-9942" />
               </label>
-              <label>
-                PESO (em kg)
-                <Input
-                  id="weight"
-                  name="weight"
-                  type="number"
-                  placeholder="80.0"
-                  step="00.1"
-                />
-              </label>
-              <label>
-                ALTURA (em metros)
-                <HeightInput name="height" />
-              </label>
+
             </div>
           </Form>
         </>

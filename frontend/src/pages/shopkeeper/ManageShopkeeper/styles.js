@@ -46,9 +46,6 @@ export const Container = styled.div`
       label {
         width: 100%;
       }
-      label + label {
-        margin-left: 16px;
-      }
     }
   }
 `;
