@@ -18,6 +18,9 @@ import authMiddleware from './app/middlewares/auth';
 const routes = new Router();
 const upload = multer(multerConfig);
 
+/* User admins  */
+routes.post('/user_admin', UserController.store); //deletar a rota quando estiver em produção
+
 /* Sessions adm  */
 routes.post('/sessions_adm', SessionsAdmController.store);
 
@@ -43,9 +46,6 @@ routes.get('/reports', ReportController.index);
 routes.get('/reports/:shopkeeperId', ReportController.show);
 routes.put('/reports/:shopkeeperId', ReportController.update);
 routes.delete('/reports/:shopkeeperId', ReportController.delete);
-
-/* User admins  */
-routes.post('/user_admin', UserController.store);
 
 /* upload de files */
 routes.post('/files', upload.single('file'), FileController.store);
