@@ -32,7 +32,8 @@ class App {
   }
 
   exceptionHandler() {
-    // eslint-disable-next-line no-unused-vars
+    try {
+      // eslint-disable-next-line no-unused-vars
     this.server.use(async (err, req, res, next) => {
       if (process.env.NODE_ENV === 'development') {
         const errors = await Youch(err, req).toJSON();
@@ -42,6 +43,9 @@ class App {
 
       return res.status(500).json({ error: 'Internal server error' });
     });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

@@ -18,13 +18,15 @@ import authMiddleware from './app/middlewares/auth';
 const routes = new Router();
 const upload = multer(multerConfig);
 
-/* User admins  */
-routes.post('/user_admin', UserController.store); //deletar a rota quando estiver em produção
+
 
 /* Sessions adm  */
 routes.post('/sessions_adm', SessionsAdmController.store);
 
 routes.use(authMiddleware);
+
+/* User admins  */
+routes.post('/user_admin', UserController.store); //deletar a rota quando estiver em produção
 
 /* Management documets */
 routes.post('/documents', DocumentController.store);
