@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 import User from '../models/User';
+import ConfirmationMail from '../jobs/ConfirmationMail';
+import Queue from '../../lib/Queue';
 
 class UserController {
   async store(req, res) {
@@ -23,7 +25,10 @@ class UserController {
       return res.status(400).json({ error: 'User already exist.' });
     }
 
-    const { id, name, email } = await User.create(req.body);
+    const user = await User.create(req.body);
+    const { id, name, email } = user;
+
+    await Queue.add(ConfirmationMail.key, { user });
 
     return res.json({ id, name, email });
   }
