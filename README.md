@@ -55,6 +55,11 @@ yarn or npm install
 
 ```
 In order to connect to the database, you will need to enter the access informations into a .env file, based on a .env.example file that is provided in the backend folder, change the variables according to your environment.
+### DOCKER 
+```
+$> docker-compose up -d
+```
+### manualy
 ```bash
 # run migrations
 yarn sequelize db:migrate
