@@ -21,6 +21,13 @@ module.exports = {
         onDelete: 'SET NULL',
         allowNull: true,
       },
+      file_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'files', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+        allowNull: true,
+      },
       start_date: {
         type: Sequelize.DATE,
         allowNull: false,
