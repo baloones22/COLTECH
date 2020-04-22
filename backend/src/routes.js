@@ -6,6 +6,7 @@ import multerConfig from './config/multer';
 
 import UserController from './app/controllers/Usercontroller';
 import SessionsAdmController from './app/controllers/SessionsAdmController';
+import SessionsShopkeeperController from './app/controllers/SessionsShopkeeperController';
 import DocumentController from './app/controllers/DocumentController';
 import FileController from './app/controllers/FileController';
 import ShopkeeperController from './app/controllers/ShopKeeperController';
@@ -21,7 +22,10 @@ const upload = multer(multerConfig);
 /* Sessions adm  */
 routes.post('/sessions_adm', SessionsAdmController.store);
 
-/* User admins  */
+/* Sessions shokeeper  */
+routes.post('/sessions_shopkeeper', SessionsShopkeeperController.store);
+
+/* User admins  brmalss */
 routes.post('/user_admin', UserController.store); // deletar a rota quando estiver em produção
 
 routes.use(authMiddleware);
@@ -45,9 +49,16 @@ routes.post('/reports', ReportController.store);
 routes.get('/reports', ReportController.index);
 routes.get('/reports/:shopkeeperId', ReportController.show);
 routes.put('/reports/:shopkeeperId', ReportController.update);
-routes.delete('/reports/:shopkeeperId', ReportController.delete);
+routes.delete(
+  '/reports/:shopkeeperId',,
+  ReportController.delete
+);
 
 /* upload de files */
-routes.post('/files', upload.single('file'), FileController.store);
+routes.post(
+  '/files',
+  upload.single('file'),
+  FileController.store
+);
 
 export default routes;
