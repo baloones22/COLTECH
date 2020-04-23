@@ -1,5 +1,6 @@
 import { object, string } from 'yup';
 import { Op } from 'sequelize';
+import bcrypt from 'bcryptjs';
 import ShopKeeper from '../models/ShopKeeper';
 
 class ShopKeeperController {
