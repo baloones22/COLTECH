@@ -1,8 +1,8 @@
 import Mail from '../../lib/Mail';
 
-class ConfirmationMail {
+class ConfirmationMailUser {
   get key() {
-    return 'ConfirmationMail';
+    return 'ConfirmationMailUser';
   }
 
   async handle({ data }) {
@@ -25,4 +25,4 @@ class ConfirmationMail {
   }
 }
 
-export default new ConfirmationMail();
+export default new ConfirmationMailUser();
