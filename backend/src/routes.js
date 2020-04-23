@@ -49,16 +49,9 @@ routes.post('/reports', ReportController.store);
 routes.get('/reports', ReportController.index);
 routes.get('/reports/:shopkeeperId', ReportController.show);
 routes.put('/reports/:shopkeeperId', ReportController.update);
-routes.delete(
-  '/reports/:shopkeeperId',,
-  ReportController.delete
-);
+routes.delete('/reports/:shopkeeperId', ReportController.delete);
 
 /* upload de files */
-routes.post(
-  '/files',
-  upload.single('file'),
-  FileController.store
-);
+routes.post('/files', upload.single('file'), FileController.store);
 
 export default routes;
