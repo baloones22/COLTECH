@@ -15,15 +15,15 @@ class App {
   constructor() {
     this.server = express();
 
-    Sentry.init(SentryConfig);
+    // Sentry.init(SentryConfig);
 
     this.middlewares();
     this.routes();
-    this.exceptionHandler();
+    // this.exceptionHandler();
   }
 
   middlewares() {
-    this.server.use(Sentry.Handlers.requestHandler());
+    // this.server.use(Sentry.Handlers.requestHandler());
     this.server.use(express.json());
     this.server.use(
       '/files',
@@ -34,10 +34,10 @@ class App {
 
   routes() {
     this.server.use(routes);
-    this.server.use(Sentry.Handlers.errorHandler());
+    // this.server.use(Sentry.Handlers.errorHandler());
   }
 
-  exceptionHandler() {
+  /*  exceptionHandler() {
     try {
       // eslint-disable-next-line no-unused-vars
       this.server.use(async (err, req, res, next) => {
@@ -52,7 +52,7 @@ class App {
     } catch (error) {
       console.log(error);
     }
-  }
+  } */
 }
 
 export default new App().server;
