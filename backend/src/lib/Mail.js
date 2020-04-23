@@ -42,7 +42,6 @@ class Mail {
       ...message,
     });
   }
-
 }
 
 export default new Mail();

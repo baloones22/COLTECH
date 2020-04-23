@@ -14,14 +14,14 @@ class ConfirmationMail {
       template: 'Confirmation',
       context: {
         name: user.name,
-      }
-    }).then(message => {
-      console.log(message);
-    }).catch(e => {
-      console.log(e);
-
-    });
-
+      },
+    })
+      .then(message => {
+        console.log(message);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 }
 

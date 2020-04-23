@@ -1,9 +1,10 @@
 import { object, date, number, string } from 'yup';
-import { addMonths, parseISO, isBefore, endOfDay, isAfter } from 'date-fns';
+import { addMonths, parseISO, isBefore, endOfDay } from 'date-fns';
 
 import Report from '../models/Report';
 import Document from '../models/Document';
 import ShopKeeper from '../models/ShopKeeper';
+
 class ReportController {
   async store(req, res) {
     const schema = object().shape({
@@ -16,29 +17,33 @@ class ReportController {
       return res.status(400).json({ error: 'Validations fails' });
     }
 
-      const { start_date, document_id, shopkeeper_id } = req.body;
+    const { start_date, document_id, shopkeeper_id } = req.body;
 
-      console.log("backend requisição", { start_date, document_id, shopkeeper_id });
+    console.log('backend requisição', {
+      start_date,
+      document_id,
+      shopkeeper_id,
+    });
 
-      const parsedStartDate = parseISO(start_date);
+    const parsedStartDate = parseISO(start_date);
 
-      const document = await Document.findByPk(document_id);
+    const document = await Document.findByPk(document_id);
 
-      console.log("ID DOCUMENT -> ", document_id);
+    console.log('ID DOCUMENT -> ', document_id);
 
-      if (!document) {
-        return res.status(400).json({ error: 'Document not found' });
-      }
+    if (!document) {
+      return res.status(400).json({ error: 'Document not found' });
+    }
 
-      const shopkeeper = await ShopKeeper.findByPk(shopkeeper_id);
+    const shopkeeper = await ShopKeeper.findByPk(shopkeeper_id);
 
-      console.log("ID LOJISTA -> ",shopkeeper_id);
+    console.log('ID LOJISTA -> ', shopkeeper_id);
 
-      if (!shopkeeper) {
-        return res.status(400).json({ error: 'Shopkeeper not found' });
-      }
+    if (!shopkeeper) {
+      return res.status(400).json({ error: 'Shopkeeper not found' });
+    }
 
-     /*  const checkShopkeeperHasMembership = await Report.findOne({
+    /*  const checkShopkeeperHasMembership = await Report.findOne({
         where: {
           shopkeeper_id,
         },
@@ -57,21 +62,19 @@ class ReportController {
           .json({ error: 'Shopkeeper already has a active mambership'})
       } */
 
-      if (isBefore(endOfDay(parsedStartDate), new Date())) {
-        return res.status(400).json({ error: 'Past dates are not permitted' });
-      }
-      const end_date = addMonths(parsedStartDate, document.duration);
+    if (isBefore(endOfDay(parsedStartDate), new Date())) {
+      return res.status(400).json({ error: 'Past dates are not permitted' });
+    }
+    const end_date = addMonths(parsedStartDate, document.duration);
 
-      const reportResponse = await Report.create({
-        shopkeeper_id,
-        document_id,
-        start_date: parsedStartDate,
-        end_date,
-      });
+    const reportResponse = await Report.create({
+      shopkeeper_id,
+      document_id,
+      start_date: parsedStartDate,
+      end_date,
+    });
 
-
-      return res.json(reportResponse);
-
+    return res.json(reportResponse);
   }
 
   async index(req, res) {
@@ -98,7 +101,7 @@ class ReportController {
         {
           model: Document,
           as: 'document',
-          attributes: [ 'id' ,'title'],
+          attributes: ['id', 'title'],
         },
       ],
     });
@@ -198,8 +201,8 @@ class ReportController {
       },
     });
 
-    if(!membership) {
-      return res.status(400).json({ error: "Shopkeeper membership not found" })
+    if (!membership) {
+      return res.status(400).json({ error: 'Shopkeeper membership not found' });
     }
 
     await membership.destroy();

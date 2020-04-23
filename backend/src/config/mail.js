@@ -7,6 +7,6 @@ export default {
     pass: '59f2ad04fda267',
   },
   default: {
-    from: 'Equipe Brmalls <noreply@brmalls>'
-  }
+    from: 'Equipe Brmalls <noreply@brmalls>',
+  },
 };
