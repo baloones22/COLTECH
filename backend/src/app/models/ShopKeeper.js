@@ -1,5 +1,5 @@
 import Sequelize, { Model } from 'sequelize';
-import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 class ShopKeeper extends Model {
   static init(sequelize) {
@@ -17,17 +17,20 @@ class ShopKeeper extends Model {
       }
     );
 
-    this.addHook('beforeSave', async user => {
-      if (user.password) {
-        user.password_hash = await bcrypt.hash(user.password, 3);
+    this.addHook('beforeSave', async shopkeeper => {
+      if (shopkeeper.password) {
+        shopkeeper.password_hash = await crypto.randomBytes(4).toString('HEX');
       }
     });
 
     return this;
   }
 
+  // eslint-disable-next-line consistent-return
   checkPassword(password) {
-    return bcrypt.compare(password, this.password_hash);
+    if (password === this.password_hash) {
+      return password;
+    }
   }
 }
 

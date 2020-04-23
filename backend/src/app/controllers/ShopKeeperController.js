@@ -1,6 +1,5 @@
 import { object, string } from 'yup';
 import { Op } from 'sequelize';
-import bcrypt from 'bcryptjs';
 import ShopKeeper from '../models/ShopKeeper';
 
 class ShopKeeperController {
@@ -18,6 +17,8 @@ class ShopKeeperController {
       return res.status(400).json({ error: 'Validations fails' });
     }
 
+    const { employee, company, email, phone } = req.body;
+
     const shopKeepExist = await ShopKeeper.findOne({
       where: { email: req.body.email },
     });
@@ -28,17 +29,17 @@ class ShopKeeperController {
         .json({ error: 'The email shopkeeper already exist' });
     }
 
-    const { id, employee, company, email, phone } = await ShopKeeper.create(
-      req.body
-    );
+    const password = '123456';
 
-    return res.json({
-      id,
+    const shopkeeper = await ShopKeeper.create({
       employee,
       company,
       email,
+      password,
       phone,
     });
+
+    return res.json(shopkeeper);
   }
 
   async index(req, res) {
