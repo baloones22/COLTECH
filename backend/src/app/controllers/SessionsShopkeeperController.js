@@ -32,12 +32,12 @@ class SessionsShopkeeperController {
       return res.status(401).json({ error: 'Password does not match' });
     }
 
-    const { id, name } = shopkeeper;
+    const { id, employee } = shopkeeper;
 
     return res.json({
       shopkeeper: {
         id,
-        name,
+        employee,
         email,
       },
       token: jwt.sign({ id }, authConfig.secret, {
