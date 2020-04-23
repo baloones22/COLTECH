@@ -54,4 +54,7 @@ routes.delete('/reports/:shopkeeperId', ReportController.delete);
 /* upload de files */
 routes.post('/files', upload.single('file'), FileController.store);
 
+/* Routes for user shopkeeper */
+/* routes.get('/files', FileController.store); */
+
 export default routes;
