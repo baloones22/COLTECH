@@ -7,6 +7,7 @@ import multerConfig from './config/multer';
 import UserController from './app/controllers/Usercontroller';
 import SessionsAdmController from './app/controllers/SessionsAdmController';
 import SessionsShopkeeperController from './app/controllers/SessionsShopkeeperController';
+import ShopkeeperProfileController from './app/controllers/ShopkeeperProfileController';
 import DocumentController from './app/controllers/DocumentController';
 import FileController from './app/controllers/FileController';
 import ShopkeeperController from './app/controllers/ShopKeeperController';
@@ -55,6 +56,7 @@ routes.delete('/reports/:shopkeeperId', ReportController.delete);
 routes.post('/files', upload.single('file'), FileController.store);
 
 /* Routes for user shopkeeper */
+routes.put('/shopkeeper_profile', ShopkeeperProfileController.update);
 /* routes.get('/files', FileController.store); */
 
 export default routes;
