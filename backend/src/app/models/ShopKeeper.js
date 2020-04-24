@@ -17,11 +17,13 @@ class ShopKeeper extends Model {
       }
     );
 
-    this.addHook('beforeSave', async shopkeeper => {
-      if (shopkeeper.password) {
-        shopkeeper.password_hash = await crypto.randomBytes(4).toString('HEX');
-      }
-    });
+    if (!this.password_hash === null) {
+      this.addHook('beforeSave', async shopkeeper => {
+        if (shopkeeper.password) {
+          shopkeeper.password_hash = await crypto.randomBytes(4).toString('HEX');
+        }
+      });
+    }
 
     return this;
   }
