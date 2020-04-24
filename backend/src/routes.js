@@ -58,6 +58,5 @@ routes.put('/user_admin', UserController.update);
 
 /* Routes for user shopkeeper */
 routes.put('/shopkeeper_profile', ShopkeeperProfileController.update);
-/* routes.get('/files', FileController.store); */
 
 export default routes;
