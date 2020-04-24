@@ -26,9 +26,6 @@ routes.post('/sessions_adm', SessionsAdmController.store);
 /* Sessions shokeeper  */
 routes.post('/sessions_shopkeeper', SessionsShopkeeperController.store);
 
-/* User admins  brmalss */
-routes.post('/user_admin', UserController.store); // deletar a rota quando estiver em produção
-
 routes.use(authMiddleware);
 
 /* Management documets */
@@ -54,6 +51,10 @@ routes.delete('/reports/:shopkeeperId', ReportController.delete);
 
 /* upload de files */
 routes.post('/files', upload.single('file'), FileController.store);
+
+/* Profile user admin brmalls*/
+routes.post('/user_admin', UserController.store);
+routes.put('/user_admin', UserController.update);
 
 /* Routes for user shopkeeper */
 routes.put('/shopkeeper_profile', ShopkeeperProfileController.update);
