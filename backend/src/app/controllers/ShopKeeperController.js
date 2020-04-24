@@ -1,6 +1,8 @@
 import { object, string } from 'yup';
 import { Op } from 'sequelize';
 import ShopKeeper from '../models/ShopKeeper';
+import ConfirmationMailShopkeeper from '../jobs/ConfirmationMailShopkeeper';
+import Queue from '../../lib/Queue';
 
 class ShopKeeperController {
   async store(req, res) {
@@ -38,6 +40,8 @@ class ShopKeeperController {
       password,
       phone,
     });
+
+    await Queue.add(ConfirmationMailShopkeeper.key, { shopkeeper });
 
     return res.json(shopkeeper);
   }

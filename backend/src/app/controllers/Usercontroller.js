@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import User from '../models/User';
-import ConfirmationMail from '../jobs/ConfirmationMail';
+import ConfirmationMailUser from '../jobs/ConfirmationMailUser';
 import Queue from '../../lib/Queue';
 
 class UserController {
@@ -28,7 +28,7 @@ class UserController {
     const user = await User.create(req.body);
     const { id, name, email } = user;
 
-    await Queue.add(ConfirmationMail.key, { user });
+    await Queue.add(ConfirmationMailUser.key, { user });
 
     return res.json({ id, name, email });
   }
