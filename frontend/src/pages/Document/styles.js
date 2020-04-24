@@ -65,7 +65,7 @@ export const Container = styled.div`
   }
 `;
 
-export const PlanList = styled.ul`
+export const DocumentList = styled.ul`
   margin-top: 20px;
   padding: 30px;
   width: 100%;

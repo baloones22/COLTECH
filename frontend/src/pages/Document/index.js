@@ -8,7 +8,7 @@ import Loading from '~/components/Loading';
 import history from '~/services/history';
 import api from '~/services/api';
 
-import { Container, PlanList } from './styles';
+import { Container, DocumentList } from './styles';
 
 export default function Document() {
   const [documents, setDocuments] = useState([]);
@@ -79,7 +79,7 @@ export default function Document() {
           {!documents.length ? (
             <p>Nenhum laudo encontrado...</p>
           ) : (
-            <PlanList>
+            <DocumentList>
               <li>
                 <strong>TÍTULO</strong>
                 <strong style={textAlignStyle}>DURAÇÃO</strong>
@@ -103,7 +103,7 @@ export default function Document() {
 
                 </li>
               ))}
-            </PlanList>
+            </DocumentList>
           )}
         </>
       )}

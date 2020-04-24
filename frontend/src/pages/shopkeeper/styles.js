@@ -76,7 +76,7 @@ export const Container = styled.div`
   }
 `;
 
-export const StudentList = styled.ul`
+export const ShopkeeperList = styled.ul`
   margin-top: 20px;
   padding: 30px;
   width: 100%;

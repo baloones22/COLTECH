@@ -9,7 +9,7 @@ import Pagination from '~/components/Pagination';
 import history from '~/services/history';
 import api from '~/services/api';
 
-import { Container, StudentList } from './styles';
+import { Container, ShopkeeperList } from './styles';
 
 export default function Shopkeeper() {
   const [shopkeeper, setShopkeepers] = useState([]);
@@ -120,7 +120,7 @@ export default function Shopkeeper() {
             <p>Nenhum lojista encontrado...</p>
           ) : (
             <>
-              <StudentList>
+              <ShopkeeperList>
                 <li>
                   <strong>Funcionário</strong>
                   <strong>E-MAIL</strong>
@@ -147,7 +147,7 @@ export default function Shopkeeper() {
                     </div>
                   </li>
                 ))}
-              </StudentList>
+              </ShopkeeperList>
               <Pagination
                 page={page}
                 totalPages={totalPages}

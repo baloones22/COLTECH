@@ -118,7 +118,7 @@ export default function ManageShopkeepers() {
             <div className="infoStudent-second">
               <label>
                 NUMERO DE CONTATO
-                <Input id="phone" name="phone" type="tel" placeholder="9 99232-9942" />
+                <Input id="phone" name="phone" type="tel" placeholder="99999-9999" />
               </label>
 
             </div>
