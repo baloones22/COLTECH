@@ -122,7 +122,7 @@ export default function Shopkeeper() {
             <>
               <ShopkeeperList>
                 <li>
-                  <strong>Funcionário</strong>
+                  <strong>LOJISTA</strong>
                   <strong>E-MAIL</strong>
                   <strong style={textAlignStyle}>EMPRESA</strong>
                 </li>

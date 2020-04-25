@@ -99,7 +99,7 @@ export default function StoreDocument() {
       ) : (
         <>
           <Header>
-            <h1>{id ? 'Edição de Laudo' : 'Cadastro de Laudo'}</h1>
+            <h1>{id ? 'Edição de categoria' : 'Criar categoria'}</h1>
             <div>
               <button type="button" onClick={() => history.push('/documents')}>
                 <MdKeyboardArrowLeft size={20} color="#fff" />
@@ -118,7 +118,7 @@ export default function StoreDocument() {
                 id="title"
                 name="title"
                 type="name"
-                placeholder="Nome do tipo de Laudo"
+                placeholder="Nome da categoria do laudo"
                 value={title || ''}
                 onChange={({ target }) => setTitle(target.value)}
               />

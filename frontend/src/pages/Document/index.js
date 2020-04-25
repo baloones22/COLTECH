@@ -68,7 +68,7 @@ export default function Document() {
       ) : (
         <>
           <div>
-            <h1>Gerenciando tipos de Laudos</h1>
+            <h1>Categoria de Laudos</h1>
             <div>
               <button type="button" onClick={() => history.push('/documents/new')}>
                 <MdAdd size={18} />
@@ -81,7 +81,7 @@ export default function Document() {
           ) : (
             <DocumentList>
               <li>
-                <strong>TÍTULO</strong>
+                <strong>CATEGORIA</strong>
                 <strong style={textAlignStyle}>DURAÇÃO</strong>
               </li>
               {documents.map(document => (

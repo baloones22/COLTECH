@@ -71,7 +71,7 @@ export default function Memberships() {
   const handleDelete = membership => {
     confirmAlert({
       title: 'Confirme a exclusão',
-      message: `Deseja remover a matricula do aluno ${membership.shopkeeper.employee} ?`,
+      message: `Deseja remover a vinculação do lojista ${membership.shopkeeper.employee} ?`,
       buttons: [
         {
           label: 'Yes',
@@ -122,7 +122,7 @@ export default function Memberships() {
               <MembershipList>
                 <li>
                   <strong>LOJISTA</strong>
-                  <strong style={textAlignStyle}>Laudo</strong>
+                  <strong style={textAlignStyle}>CATEGORIA</strong>
                   <strong style={textAlignStyle}>INÍCIO</strong>
                   <strong style={textAlignStyle}>FIM DA VALIDADE</strong>
                   <strong style={textAlignStyle}>ATIVA</strong>

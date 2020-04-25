@@ -184,7 +184,7 @@ export default function ManageMembership() {
         <>
           <Header>
             <h1>
-              {shopkeeperId ? 'Edição de matrícula' : 'Cadastro de matrícula'}
+              {shopkeeperId ? 'Editar vinculação' : 'Vinculação de laudos'}
             </h1>
             <div>
               <button

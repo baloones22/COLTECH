@@ -12,7 +12,7 @@ import api from '~/services/api';
 import { Container, Header } from './styles';
 
 const schema = Yup.object().shape({
-  employee: Yup.string().required('Campo Nome do funcionário é obrigatório'),
+  employee: Yup.string().required('Campo Nome do lojista é obrigatório'),
   company: Yup.string().required('Campo de campany  é obrigatório'),
   email: Yup.string()
     .email('Digite um email valido')
