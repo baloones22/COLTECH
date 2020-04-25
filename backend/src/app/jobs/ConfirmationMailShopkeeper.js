@@ -11,9 +11,10 @@ class ConfirmationMailShopkeeper {
     await Mail.sendMail({
       to: `${shopkeeper.employee} <${shopkeeper.email}>`,
       subject: 'Cadastramento realizado',
-      template: 'Confirmation',
+      template: 'ConfirmationShopkeeper',
       context: {
         name: shopkeeper.employee,
+        password_hash: shopkeeper.password_hash,
       },
     })
       .then(message => {
