@@ -4,6 +4,7 @@ import { addMonths, parseISO, isBefore, endOfDay } from 'date-fns';
 import Report from '../models/Report';
 import Document from '../models/Document';
 import ShopKeeper from '../models/ShopKeeper';
+import File from '../models/File';
 
 class ReportController {
   async store(req, res) {
@@ -11,6 +12,7 @@ class ReportController {
       start_date: date(),
       shopkeeper_id: number(),
       document_id: number(),
+      file_id: number(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -23,6 +25,7 @@ class ReportController {
       start_date,
       document_id,
       shopkeeper_id,
+      file_id,
     });
 
     const parsedStartDate = parseISO(start_date);
@@ -41,6 +44,14 @@ class ReportController {
 
     if (!shopkeeper) {
       return res.status(400).json({ error: 'Shopkeeper not found' });
+    }
+
+    const file = await File.findByPk(file_id);
+
+    console.log('ID FILE -> ', file_id);
+
+    if (!file) {
+      return res.status(400).json({ error: 'File not found' });
     }
 
     /*  const checkShopkeeperHasMembership = await Report.findOne({
@@ -70,6 +81,7 @@ class ReportController {
     const reportResponse = await Report.create({
       shopkeeper_id,
       document_id,
+      file_id,
       start_date: parsedStartDate,
       end_date,
     });
@@ -103,6 +115,11 @@ class ReportController {
           as: 'document',
           attributes: ['id', 'title'],
         },
+        {
+          model: File,
+          as: 'file',
+          attributes: ['id', 'name', 'url'],
+        },
       ],
     });
 
@@ -127,6 +144,11 @@ class ReportController {
           model: Document,
           as: 'document',
           attributes: ['title', 'duration'],
+        },
+        {
+          model: File,
+          as: 'file',
+          attributes: ['id', 'name', 'url'],
         },
       ],
     });
