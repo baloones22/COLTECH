@@ -1,7 +1,6 @@
 import multer from 'multer';
 import crypto from 'crypto';
 import { extname ,resolve } from 'path';
-import path from 'path';
 
 export default {
   dest: resolve(__dirname,"..", "..", "tmp", "uploads"),
@@ -25,9 +24,9 @@ export default {
   },
 
   fileFilter: (req, file, cb) => {
-    if (extname(file.originalname) !== '.pdf') {
+    /* if (extname(file.originalname) !== '.pdf') {
       return cb(new Error('Only pdfs are allowed'))
-    }
+    } */
 
     cb(null, true)
   }
