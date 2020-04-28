@@ -13,12 +13,17 @@ import FileController from './app/controllers/FileController';
 import ShopkeeperController from './app/controllers/ShopKeeperController';
 import ReportController from './app/controllers/ReportController';
 
-// eslint-disable-next-line import/no-named-as-default
-// eslint-disable-next-line import/no-named-as-default-member
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 const upload = multer(multerConfig);
+
+/* Test upload file pdf */
+routes.post('/files', upload.single('file'), (req,res) => {
+  console.log(req.file);
+
+  return res.json({ hello: "brmalls" });
+});
 
 /* Sessions adm  */
 routes.post('/sessions_adm', SessionsAdmController.store);
@@ -50,7 +55,7 @@ routes.put('/reports/:shopkeeperId', ReportController.update);
 routes.delete('/reports/:shopkeeperId', ReportController.delete);
 
 /* upload de files */
-routes.post('/files', upload.single('file'), FileController.store);
+//routes.post('/files', upload.single('file'), FileController.store);
 
 /* Profile user admin brmalls*/
 routes.post('/user_admin', UserController.store);
