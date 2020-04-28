@@ -38,6 +38,11 @@ class Report extends Model {
       foreignKey: 'document_id',
       as: 'document',
     });
+
+    this.belongsTo(models.File, {
+      foreignKey: 'file_id',
+      as: 'file',
+    });
   }
 }
 
