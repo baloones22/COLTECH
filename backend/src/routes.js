@@ -12,6 +12,7 @@ import DocumentController from './app/controllers/DocumentController';
 import FileController from './app/controllers/FileController';
 import ShopkeeperController from './app/controllers/ShopKeeperController';
 import ReportController from './app/controllers/ReportController';
+import ListController from './app/controllers/ListController';
 
 // eslint-disable-next-line import/no-named-as-default
 // eslint-disable-next-line import/no-named-as-default-member
@@ -58,5 +59,8 @@ routes.put('/user_admin', UserController.update);
 
 /* Routes for user shopkeeper */
 routes.put('/shopkeeper_profile', ShopkeeperProfileController.update);
+
+/* List for shopkeeper */
+routes.get('/list', ListController.index);
 
 export default routes;
