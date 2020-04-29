@@ -1,16 +1,15 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { FaUserEdit } from 'react-icons/fa';
+
 import LinkWrapper from '~/helpers/LinkWrapper';
 import Menu from './Menu';
 
 import { Container, Content, Profile } from './styles';
 
-import { signOut } from '~/store/modules/auth/actions';
-
 export default function Header() {
   const [width, setWidth] = useState([0]);
   const profile = useSelector(state => state.user.profile);
-  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     function updateWidth() {
@@ -20,10 +19,6 @@ export default function Header() {
     updateWidth();
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
-
-  const handleSignout = () => {
-    dispatch(signOut());
-  };
 
   return (
     <Container>
@@ -45,9 +40,7 @@ export default function Header() {
         <aside>
           <Profile>
             <strong>{profile.name}</strong>
-            <button type="button" onClick={handleSignout}>
-              sair do sistema
-            </button>
+            <LinkWrapper to="/profile">Meu perfil <FaUserEdit style={{color: '#194390'}} size={16} /> </LinkWrapper>
           </Profile>
         </aside>
       </Content>

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 
+
 export const Container = styled.div`
   background: #fff;
   padding: 0 30px;
@@ -38,8 +39,18 @@ export const Content = styled.div`
   }
 
   aside {
+    margin-top: 5px;
     display: flex;
     align-items: center;
+
+    a {
+      color: #194390;
+      &:hover {
+        color: ${darken(0.3, '#eee')};
+      }
+
+    }
+
   }
 
   @media (max-width: 768px) {
