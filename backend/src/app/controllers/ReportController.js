@@ -21,18 +21,9 @@ class ReportController {
 
     const { start_date, document_id, shopkeeper_id } = req.body;
 
-    console.log('backend requisição', {
-      start_date,
-      document_id,
-      shopkeeper_id,
-      file_id,
-    });
-
     const parsedStartDate = parseISO(start_date);
 
     const document = await Document.findByPk(document_id);
-
-    console.log('ID DOCUMENT -> ', document_id);
 
     if (!document) {
       return res.status(400).json({ error: 'Document not found' });
@@ -40,38 +31,17 @@ class ReportController {
 
     const shopkeeper = await ShopKeeper.findByPk(shopkeeper_id);
 
-    console.log('ID LOJISTA -> ', shopkeeper_id);
 
     if (!shopkeeper) {
       return res.status(400).json({ error: 'Shopkeeper not found' });
     }
 
-    const file = await File.findByPk(file_id);
-
-    console.log('ID FILE -> ', file_id);
+    /* const file = await File.findByPk(file_id);
 
     if (!file) {
       return res.status(400).json({ error: 'File not found' });
-    }
+    } */
 
-    /*  const checkShopkeeperHasMembership = await Report.findOne({
-        where: {
-          shopkeeper_id,
-        },
-      });
-
-      if (
-        checkShopkeeperHasMembership &&
-          (checkShopkeeperHasMembership.active ||
-            isAfter(
-              endOfDay(checkShopkeeperHasMembership.start_date),
-              endOfDay(new Date())
-            ))
-      ) {
-        return res
-          .status(400)
-          .json({ error: 'Shopkeeper already has a active mambership'})
-      } */
 
     if (isBefore(endOfDay(parsedStartDate), new Date())) {
       return res.status(400).json({ error: 'Past dates are not permitted' });
@@ -81,7 +51,6 @@ class ReportController {
     const reportResponse = await Report.create({
       shopkeeper_id,
       document_id,
-      file_id,
       start_date: parsedStartDate,
       end_date,
     });

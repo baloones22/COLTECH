@@ -26,6 +26,7 @@ class UserController {
     }
 
     const user = await User.create(req.body);
+
     const { id, name, email } = user;
 
     await Queue.add(ConfirmationMailUser.key, { user });

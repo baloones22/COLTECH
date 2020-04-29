@@ -12,13 +12,15 @@ import DocumentController from './app/controllers/DocumentController';
 import FileController from './app/controllers/FileController';
 import ShopkeeperController from './app/controllers/ShopKeeperController';
 import ReportController from './app/controllers/ReportController';
-import ListController from './app/controllers/ListController';
+import ListReportController from './app/controllers/ListReportController';
 
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 const upload = multer(multerConfig);
 
+
+routes.post('/user_admin', UserController.store);
 
 /* Sessions adm  */
 routes.post('/sessions_adm', SessionsAdmController.store);
@@ -43,7 +45,7 @@ routes.put('/shopkeeper/:id', ShopkeeperController.update);
 routes.delete('/shopkeeper/:id', ShopkeeperController.delete);
 
 /* List for shopkeeper */
-routes.get('/list', ListController.index);
+routes.get('/list', ListReportController.index);
 
 /* Management reports */
 routes.post('/reports', ReportController.store);
@@ -60,7 +62,7 @@ routes.delete('/files/:id', FileController.delete);
 
 
 /* Profile user admin brmalls*/
-routes.post('/user_admin', UserController.store);
+
 routes.put('/user_admin', UserController.update);
 
 /* Routes for user shopkeeper */
