@@ -2,7 +2,7 @@ import Report from '../models/Report';
 import File from '../models/File';
 import Document from '../models/Document';
 
-class ListController {
+class ListReportController {
   async index(req, res) {
     const { page = 1 } = req.query;
 
@@ -36,4 +36,4 @@ class ListController {
   }
 }
 
-export default new ListController();
+export default new ListReportController();
