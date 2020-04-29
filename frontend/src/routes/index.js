@@ -10,6 +10,7 @@ import ManageDocuments from '~/pages/Document/ManageDocuments';
 import Memberships from '~/pages/Memberships';
 import ManageMembership from '~/pages/Memberships/ManageMembership';
 import HelpOrders from '~/pages/HelpOrders';
+import Profile from '~/pages/Profile';
 
 const Routes = () => {
   return (
@@ -33,6 +34,8 @@ const Routes = () => {
       />
 
       <Route path="/helporders" component={HelpOrders} isPrivate />
+      <Route path="/profile" component={Profile} isPrivate />
+
     </Switch>
   );
 };
