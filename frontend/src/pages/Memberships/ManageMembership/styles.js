@@ -72,7 +72,7 @@ export const Header = styled.div`
   }
 `;
 
-export const Student = styled.div`
+export const Shopkeeper = styled.div`
   width: 100%;
   padding-top: 25px;
 

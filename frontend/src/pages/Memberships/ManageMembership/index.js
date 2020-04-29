@@ -15,7 +15,7 @@ import history from '~/services/history';
 import api from '~/services/api';
 import colors from '~/styles/colors';
 
-import { Container, Header, Student, Info } from './styles';
+import { Container, Header, Shopkeeper, Info } from './styles';
 
 const schema = Yup.object().shape({
   start_date: Yup.date().required('Campo data de inicio é obrigatório'),
@@ -49,13 +49,13 @@ export default function ManageMembership() {
 
   useEffect(() => {
     if (!shopkeeperId) {
-      const loadStudents = async () => {
+      const loadShopkeepers = async () => {
         const { data } = await api.get('shopkeeper');
 
         setShopkeepers(data);
       };
 
-      loadStudents();
+      loadShopkeepers();
     }
   }, [shopkeeperId]);
 
@@ -70,7 +70,7 @@ export default function ManageMembership() {
     loadPlans();
   }, []);
 
-  const getStudents = async filter => {
+  const getShopkeepers = async filter => {
     if (!filter) {
       return [];
     }
@@ -84,7 +84,7 @@ export default function ManageMembership() {
   };
 
   const wait = 1500; // milliseconds
-  const loadOptions = inputValue => getStudents(inputValue);
+  const loadOptions = inputValue => getShopkeepers(inputValue);
   const debouncedLoadOptions = debounce(loadOptions, wait, {
     leading: true,
   });
@@ -201,7 +201,7 @@ export default function ManageMembership() {
             </div>
           </Header>
           <form id="form-memberships" onSubmit={handleSubmit}>
-            <Student>
+            <Shopkeeper>
               <label>LOJISTA </label>
               <AsyncSelect
                 isDisabled={shopkeeperId}
@@ -222,10 +222,10 @@ export default function ManageMembership() {
                   })
                 }
               />
-            </Student>
+            </Shopkeeper>
             <Info>
               <label>
-                LAUDO
+                CATEGORIA
                 <Select
                   styles={customStyles}
                   options={documents}
