@@ -29,7 +29,7 @@ export default function Header() {
           </nav>
         ) : (
           <nav>
-            <span>DOC'S LOJISTA</span>
+            <span><LinkWrapper to="/">DOC'S LOJISTAS</LinkWrapper></span>
             <LinkWrapper to="/shopkeeper">Lojas</LinkWrapper>
             <LinkWrapper to="/documents">Laudos</LinkWrapper>
             <LinkWrapper to="/memberships">Vinculação</LinkWrapper>
