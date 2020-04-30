@@ -27,13 +27,14 @@ routes.post('/sessions_adm', SessionsAdmController.store);
 
 /* Sessions shopkeeper  */
 routes.post('/sessions_shopkeeper', SessionsShopkeeperController.store);
+routes.use(authMiddleware);
 
 /* Sessions Solicitations */
 routes.get('/solicitations', SolicitationController.index);
 routes.get('/solicitations/:document_id', SolicitationController.showbydoc);
 routes.post('/solicitations/reports', SolicitationController.store);
 
-/*routes.use(authMiddleware);*/
+
 
 /* Management documets */
 routes.post('/documents', DocumentController.store);
